@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import NotificationCenter
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -29,11 +30,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             name: .userAuthorized,
             object: nil
         )
+        application.registerForRemoteNotifications()
         return true
     }
 
     @objc private func handleAuthorization() {
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options:[.badge, .alert, .sound]) { granted, error in
+            if granted  {
+                DispatchQueue.main.async {
+                    UIApplication.shared.registerForRemoteNotifications()
+                }
+            }
+        }
         window?.rootViewController = RootTabBarController()
         window?.makeKeyAndVisible()
+    }
+
+    func application(
+        _ application: UIApplication,
+        didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data
+    ) {
+        let token = deviceToken.reduce("") { string, byte in
+            string + String(format: "%02X", byte)
+        }
+        print(token)
+        // отправка на сервер
+    }
+
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print(
+            (error as NSError).description
+        )
+        // нет платного аккаунта apple developer
     }
 }
