@@ -34,6 +34,7 @@
 		5C00C7AF2674D78A004430E7 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C00C7AE2674D78A004430E7 /* AuthViewController.swift */; };
 		5C00C7B12674D793004430E7 /* AuthNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C00C7B02674D793004430E7 /* AuthNavigationController.swift */; };
 		5C00C7B32674DEBB004430E7 /* Notificaitons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C00C7B22674DEBB004430E7 /* Notificaitons.swift */; };
+		5C00C7B82674F034004430E7 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C00C7B72674F034004430E7 /* Logger.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,6 +66,7 @@
 		5C00C7AE2674D78A004430E7 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		5C00C7B02674D793004430E7 /* AuthNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthNavigationController.swift; sourceTree = "<group>"; };
 		5C00C7B22674DEBB004430E7 /* Notificaitons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notificaitons.swift; sourceTree = "<group>"; };
+		5C00C7B72674F034004430E7 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		686FE9E66911C84FC519945E /* Pods_MCH.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MCH.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E32671399E93708E5F35B49 /* Pods-MCH.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MCH.debug.xcconfig"; path = "Target Support Files/Pods-MCH/Pods-MCH.debug.xcconfig"; sourceTree = "<group>"; };
 		BA6C91DAB428496D96FFCD88 /* Pods-MCH.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MCH.release.xcconfig"; path = "Target Support Files/Pods-MCH/Pods-MCH.release.xcconfig"; sourceTree = "<group>"; };
@@ -190,6 +192,7 @@
 			children = (
 				5C00C78926749FFD004430E7 /* NetworkService.swift */,
 				5C00C78B2674A006004430E7 /* INetworkService.swift */,
+				5C00C7B72674F034004430E7 /* Logger.swift */,
 			);
 			path = NetworkService;
 			sourceTree = "<group>";
@@ -396,6 +399,7 @@
 				5C00C77526749312004430E7 /* RootTabBarController.swift in Sources */,
 				5C00C79D2674B6E3004430E7 /* UserEventsListViewController.swift in Sources */,
 				5C00C78226749E05004430E7 /* EventsNavigationController.swift in Sources */,
+				5C00C7B82674F034004430E7 /* Logger.swift in Sources */,
 				5C00C75F26749085004430E7 /* AppDelegate.swift in Sources */,
 				5C00C78C2674A006004430E7 /* INetworkService.swift in Sources */,
 				5C00C7AC2674D396004430E7 /* AuthStorage.swift in Sources */,

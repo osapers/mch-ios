@@ -14,7 +14,7 @@ final class DependenciesFactory {
     private init() { }
 
     func networkService() -> INetworkService {
-        NetworkService()
+        NetworkService(authStorage: authStorage())
     }
 
     func authStorage() -> AuthStorage {

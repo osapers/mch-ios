@@ -7,6 +7,7 @@
 
 import UIKit
 import PureLayout
+import Combine
 
 final class AuthViewController: UIViewController {
 
@@ -15,6 +16,8 @@ final class AuthViewController: UIViewController {
     lazy var stackView = UIStackView().configureForAutoLayout()
     lazy var continueButton = UIButton().configureForAutoLayout()
     lazy var authStorage = dependencies.authStorage()
+    lazy var networkService = dependencies.networkService()
+    private var cancellableBag: [AnyCancellable] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,8 +70,54 @@ final class AuthViewController: UIViewController {
     }
 
     @objc private func handleContinueButtonTap() {
-        authStorage.isAuthorized = true
-        NotificationCenter.default.post(Notification(name: .userAuthorized))
+        view.endEditing(true)
+        guard let login = loginTextField.text, let password = passwordTextField.text else {
+            return
+        }
+
+        let loadingView = startLoading()
+
+        networkService
+            .auth(login: login, password: password)
+            .sink { [weak self] error in
+                guard let self = self else {
+                    return
+                }
+
+                switch error {
+                case .failure(let error):
+                    self.stopLoading(loadingView: loadingView)
+                    self.showError(error: error)
+                case .finished:
+                    break
+                }
+            } receiveValue: { [weak self] response in
+                guard let self = self else {
+                    return
+                }
+
+                self.stopLoading(loadingView: loadingView)
+                if response.data.isWrongPassword {
+                    let alert = UIAlertController(
+                        title: "Неверный пароль",
+                        message: "Попробуйте снова",
+                        preferredStyle: .alert
+                    )
+                    let action = UIAlertAction(title: "ОК", style: .default, handler: nil)
+                    alert.addAction(action)
+                    self.present(alert, animated: true, completion: nil)
+                } else if response.data.isNotExists {
+                    // TODO: handle new user
+                    self.authStorage.token = response.data.token
+                    self.authStorage.isAuthorized = true
+                    NotificationCenter.default.post(Notification(name: .userAuthorized))
+                } else {
+                    self.authStorage.token = response.data.token
+                    self.authStorage.isAuthorized = true
+                    NotificationCenter.default.post(Notification(name: .userAuthorized))
+                }
+            }
+            .store(in: &cancellableBag)
     }
 
     private func handleContinueButtonState() {

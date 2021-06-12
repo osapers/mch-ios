@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Alamofire
 
 extension UIViewController {
 
@@ -26,5 +27,12 @@ extension UIViewController {
         loadingView.willMove(toParent: nil)
         loadingView.view.removeFromSuperview()
         loadingView.removeFromParent()
+    }
+
+    func showError(error: AFError) {
+        let alert = UIAlertController(title: "Ошибка", message: error.errorDescription, preferredStyle: .alert)
+        let action = UIAlertAction(title: "ОК", style: .default, handler: nil)
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
     }
 }
