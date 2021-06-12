@@ -1,0 +1,34 @@
+PODS:
+  - Alamofire (5.4.0)
+  - PureLayout (3.1.6)
+  - SDWebImage (5.10.0):
+    - SDWebImage/Core (= 5.10.0)
+  - SDWebImage/Core (5.10.0)
+  - TTTAttributedLabel (2.0.0)
+  - UIView-Shimmer (1.0.4)
+
+DEPENDENCIES:
+  - Alamofire (~> 5.4)
+  - PureLayout
+  - SDWebImage (~> 5.0)
+  - TTTAttributedLabel
+  - UIView-Shimmer
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - PureLayout
+    - SDWebImage
+    - TTTAttributedLabel
+    - UIView-Shimmer
+
+SPEC CHECKSUMS:
+  Alamofire: 3b6a534a3df22db367e4dedeeca73d1ddfcf0e2f
+  PureLayout: bd3c4ec3a3819ad387c99ebb72c6b129c3ed4d2d
+  SDWebImage: 9169792e9eec3e45bba2a0c02f74bf8bd922d1ee
+  TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
+  UIView-Shimmer: ff0a32c73d67c7dbdea3d9e530538b10d18aea56
+
+PODFILE CHECKSUM: c68e0bbd87c7592fdd237ef8092d41de7f65636e
+
+COCOAPODS: 1.9.1
