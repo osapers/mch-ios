@@ -10,16 +10,29 @@ import UIKit
 
 struct Event: Decodable {
 
-    let imageURL: URL = URL(string: "https://upload.wikimedia.org/wikipedia/commons/3/33/Vanamo_Logo.png")!
-    let name: String = "Название события"
-    let shortDescription: String = "Короткое описание"
-    let longDescription: String = "Длинное описание +79000000000"
-    let type: EventType = .webinar
-    let date: Date = Date()
-    let email: String = "juicyfru@gmail.com"
-    let website: String = "www.yandex.ru"
-    let address: EventAddress = EventAddress()
-    let id: String = "1"
+    enum CodingKeys: String, CodingKey {
+        case imageURL = "image"
+        case name
+        case shortDescription = "short_description"
+        case longDescription = "description"
+        case type = "category"
+        case date
+        case email
+        case website
+        case address
+        case id
+    }
+
+    let imageURL: URL
+    let name: String
+    let shortDescription: String
+    let longDescription: String
+    let type: EventType
+    let date: Date
+    let email: String
+    let website: String
+    let address: EventAddress
+    let id: String
     var isParticipating: Bool = false
 
     enum EventType: String, Decodable {
@@ -41,8 +54,13 @@ struct Event: Decodable {
     }
 
     struct EventAddress: Decodable {
-        let longitude: Double = 55.4
-        let latitude: Double = 33.76
-        let description: String = "Улица строителей, дом 56"
+        enum CodingKeys: String, CodingKey {
+            case longitude = "lon"
+            case latitude = "lat"
+            case description = "raw"
+        }
+        let longitude: Double
+        let latitude: Double
+        let description: String
     }
 }

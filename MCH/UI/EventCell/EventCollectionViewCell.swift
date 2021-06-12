@@ -77,6 +77,8 @@ class EventCollectionViewCell: UICollectionViewCell {
     private func setupEventIcon() {
         containerView.addSubview(eventIcon)
         eventIcon.autoSetDimensions(to: CGSize(width: 48, height: 48))
+        eventIcon.layer.cornerRadius = 24
+        eventIcon.contentMode = .scaleAspectFit
         eventIcon.autoPinEdge(toSuperviewEdge: .left, withInset: 16)
         eventIcon.autoPinEdge(toSuperviewEdge: .top, withInset: 8)
         eventIcon.sd_imageIndicator = SDWebImageActivityIndicator.gray

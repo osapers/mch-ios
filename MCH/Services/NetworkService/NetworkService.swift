@@ -30,13 +30,23 @@ final class NetworkService: INetworkService {
     }
 
     func loadEvents() -> AnyPublisher<[Event], Never> {
-        Future<[Event], Never> { promise in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                promise(
-                    .success([Event(), Event(), Event(), Event(), Event(), Event(), Event(), Event(), Event()])
-                )
+        Future<EventsResponse, AFError> { [weak self] promise in
+            guard let self = self else {
+                return
             }
-        }.eraseToAnyPublisher()
+
+            self.session.request(
+                self.baseURL.appending("api/v1/events"),
+                method: .get,
+                headers: self.headers
+            )
+            .responseDecodable(of: EventsResponse.self) { response in
+                promise(response.result)
+            }
+        }
+        .map { $0.data }
+        .replaceError(with: [])
+        .eraseToAnyPublisher()
     }
 
     func participateInEvent(event: Event) -> AnyPublisher<Void, Never> {
@@ -88,4 +98,9 @@ struct AuthResponse: Decodable {
         let isWrongPassword: Bool
         let isNotExists: Bool
     }
+}
+
+struct EventsResponse: Decodable {
+
+    let data: [Event]
 }

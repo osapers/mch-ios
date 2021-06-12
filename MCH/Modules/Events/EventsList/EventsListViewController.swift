@@ -30,6 +30,13 @@ class EventsListViewController: UIViewController {
         super.viewDidLoad()
         setupViews()
         collectionView.isUserInteractionEnabled = false
+        loadEvents()
+        let refreshControl = UIRefreshControl()
+        collectionView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(loadEvents), for: .valueChanged)
+    }
+
+    @objc private func loadEvents() {
         networkService
             .loadEvents()
             .sink { [weak self] events in
@@ -39,6 +46,7 @@ class EventsListViewController: UIViewController {
                 
                 self.isLoading = false
                 self.events = events
+                self.collectionView.refreshControl?.endRefreshing()
                 self.collectionView.reloadWithAnimation()
                 self.collectionView.isUserInteractionEnabled = true
             }

@@ -21,6 +21,7 @@ extension EventViewController {
         setupEventAddress()
         setupEventEmail()
         setupParticipateButton()
+        setupWebsiteLabel()
         navigationItem.title = "Мероприятие"
     }
 
@@ -82,10 +83,21 @@ extension EventViewController {
         emailLabel.numberOfLines = 0
         emailLabel.autoPinEdge(.left, to: .left, of: view, withOffset: 16)
         emailLabel.autoPinEdge(toSuperviewEdge: .right, withInset: 16, relation: .greaterThanOrEqual)
-        emailLabel.autoPinEdge(toSuperviewEdge: .bottom, withInset: 80, relation: .greaterThanOrEqual)
         emailLabel.enabledTextCheckingTypes = NSTextCheckingAllSystemTypes
         emailLabel.delegate = self
     }
+
+    private func setupWebsiteLabel() {
+        view.addSubview(websiteLabel)
+        websiteLabel.autoPinEdge(.top, to: .bottom, of: emailLabel, withOffset: 8)
+        websiteLabel.numberOfLines = 0
+        websiteLabel.autoPinEdge(.left, to: .left, of: view, withOffset: 16)
+        websiteLabel.autoPinEdge(toSuperviewEdge: .right, withInset: 16, relation: .greaterThanOrEqual)
+        websiteLabel.autoPinEdge(toSuperviewEdge: .bottom, withInset: 80, relation: .greaterThanOrEqual)
+        websiteLabel.enabledTextCheckingTypes = NSTextCheckingAllSystemTypes
+        websiteLabel.delegate = self
+    }
+
 
     private func setupParticipateButton() {
         view.addSubview(participateButton)

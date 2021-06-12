@@ -27,6 +27,7 @@ class EventViewController: UIViewController {
     let dateLabel = UILabel().configureForAutoLayout()
     let addressLabel = UILabel().configureForAutoLayout()
     let emailLabel = TTTAttributedLabel(frame: .zero).configureForAutoLayout()
+    let websiteLabel = TTTAttributedLabel(frame: .zero).configureForAutoLayout()
     let participateButton = UIButton().configureForAutoLayout()
 
     override func viewDidLoad() {
@@ -115,6 +116,7 @@ class EventViewController: UIViewController {
         eventTypeView.backgroundColor = model.type.color
         addressLabel.text = "Адрес: \(model.address.description)"
         emailLabel.text = "Электронная почта: \(model.email)"
+        websiteLabel.text = "Сайт: \(model.website)"
     }
 }
 
