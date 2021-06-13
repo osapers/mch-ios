@@ -1,13 +1,13 @@
 //
-//  UserEventsNavigationControllerController.swift
+//  ProfileNavigationController.swift
 //  MCH
 //
-//  Created by  a.khodko on 12.06.2021.
+//  Created by  a.khodko on 13.06.2021.
 //
 
 import UIKit
 
-class UserEventsNavigationController: UINavigationController {
+class ProfileNavigationController: UINavigationController {
 
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -26,8 +26,8 @@ class UserEventsNavigationController: UINavigationController {
 
     private func makeTabBarItem() {
         let item = UITabBarItem()
-        item.title = "Мои мероприятия"
-        item.image = UIImage(named: "UserEvents")
+        item.title = "Профиль"
+        item.image = UIImage(named: "Profile")
         tabBarItem = item
     }
 }
