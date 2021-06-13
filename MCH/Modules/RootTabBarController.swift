@@ -25,7 +25,5 @@ class RootTabBarController: UITabBarController {
 
         let userEventsViewController = UserEventsListViewController()
         userEventsNavigationController.viewControllers = [userEventsViewController]
-        let _ = userEventsNavigationController.view
-        let _ = userEventsViewController.view
     }
 }

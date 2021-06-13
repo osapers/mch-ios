@@ -21,6 +21,7 @@ class UserEventsListViewController: UIViewController {
         frame: view.bounds,
         collectionViewLayout: UICollectionViewLayout.makeTableViewLayout()
     ).configureForAutoLayout()
+    var zeroScreen: UIView?
     private var cancellableBag: [AnyCancellable] = []
 
     lazy var eventsService = dependencies.eventsService()
@@ -56,13 +57,33 @@ class UserEventsListViewController: UIViewController {
                 }
                 
                 self.isLoading = false
-                self.collectionView.reloadWithAnimation()
+                self.collectionView.reloadWithAnimation {
+                    self.handleZeroScreen()
+                }
                 self.collectionView.isUserInteractionEnabled = true
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                     self.collectionView.refreshControl?.endRefreshing()
                 }
             }
             .store(in: &cancellableBag)
+    }
+
+    private func handleZeroScreen() {
+        if !events.isEmpty {
+            zeroScreen?.removeFromSuperview()
+            return
+        }
+
+        let zeroScreen = UIView().configureForAutoLayout()
+        zeroScreen.backgroundColor = .white
+        let noResultLabel = UILabel().configureForAutoLayout()
+        zeroScreen.addSubview(noResultLabel)
+        noResultLabel.text = "У Вас нет активных мероприятий"
+        noResultLabel.autoCenterInSuperview()
+        view.addSubview(zeroScreen)
+        zeroScreen.autoPinEdgesToSuperviewMargins()
+        view.bringSubviewToFront(zeroScreen)
+        self.zeroScreen = zeroScreen
     }
 }
 
