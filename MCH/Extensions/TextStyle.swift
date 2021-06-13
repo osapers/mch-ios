@@ -116,6 +116,8 @@ public struct TextStyle: Equatable {
 
         if let lineBreakMode = lineBreakMode {
             paragraphStyle.lineBreakMode = lineBreakMode
+        } else {
+            paragraphStyle.lineBreakMode = .byTruncatingTail
         }
 
         attributes[.paragraphStyle] = paragraphStyle

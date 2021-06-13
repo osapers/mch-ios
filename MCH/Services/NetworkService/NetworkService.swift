@@ -16,9 +16,13 @@ final class NetworkService {
         eventMonitors: [AlamofireLogger()]
     )
     private let authStorage: AuthStorage
+    private let decoder: JSONDecoder
     
     init(authStorage: AuthStorage) {
         self.authStorage = authStorage
+        decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .secondsSince1970
+    
     }
     
     private var headers: HTTPHeaders {
@@ -33,12 +37,15 @@ final class NetworkService {
         let endpoint = baseURL.appending("api/v1/events")
         let headers = self.headers
         return Future<EventsResponse, AFError> { [weak self] promise in
-            self?.session.request(
+            guard let self = self else {
+                return
+            }
+            self.session.request(
                 endpoint,
                 method: .get,
                 headers: headers
             )
-            .responseDecodable(of: EventsResponse.self) { response in
+            .responseDecodable(of: EventsResponse.self, decoder: self.decoder) { response in
                 promise(response.result)
             }
         }
@@ -51,14 +58,17 @@ final class NetworkService {
         let endpoint = baseURL.appending("api/v1/auth")
         let headers = self.headers
         return Future<AuthResponse, AFError> { [weak self] promise in
-            self?.session.request(
+            guard let self = self else {
+                return
+            }
+            self.session.request(
                 endpoint,
                 method: .post,
                 parameters: AuthParameters(email: login, password: password),
                 encoder: JSONParameterEncoder.default,
                 headers: headers
             )
-            .responseDecodable(of: AuthResponse.self) { response in
+            .responseDecodable(of: AuthResponse.self, decoder: self.decoder) { response in
                 promise(response.result)
             }
         }.eraseToAnyPublisher()
@@ -89,12 +99,15 @@ final class NetworkService {
         let headers = self.headers
         
         return Future<UserResponse, AFError> { [weak self] promise in
-            self?.session.request(
+            guard let self = self else {
+                return
+            }
+            self.session.request(
                 endpoint,
                 method: .get,
                 headers: headers
             )
-            .responseDecodable(of: UserResponse.self) { response in
+            .responseDecodable(of: UserResponse.self, decoder: self.decoder) { response in
                 promise(response.result)
             }
         }
@@ -107,14 +120,16 @@ final class NetworkService {
         let headers = self.headers
         
         return Future<UserResponse, AFError> { [weak self] promise in
-            self?.session.request(
+            guard let self = self else {
+                return
+            }
+            self.session.request(
                 endpoint,
                 method: .put,
                 parameters: user,
-                encoder: JSONParameterEncoder.default,
                 headers: headers
             )
-            .responseDecodable(of: UserResponse.self) { response in
+            .responseDecodable(of: UserResponse.self, decoder: self.decoder) { response in
                 promise(response.result)
             }
         }
@@ -127,14 +142,16 @@ final class NetworkService {
         let headers = self.headers
         
         return Future<SpecializationsResponse, AFError> { [weak self] promise in
-            self?.session.request(
+            guard let self = self else {
+                return
+            }
+            self.session.request(
                 endpoint,
                 method: .post,
                 parameters: SpecializationsRequest(query: query),
-                encoder: JSONParameterEncoder.default,
                 headers: headers
             )
-            .responseDecodable(of: SpecializationsResponse.self) { response in
+            .responseDecodable(of: SpecializationsResponse.self, decoder: self.decoder) { response in
                 promise(response.result)
             }
         }
@@ -147,11 +164,14 @@ final class NetworkService {
         let headers = self.headers
         
         return Future<EmptyResponse, AFError> { [weak self] promise in
-            self?.session.request(
+            guard let self = self else {
+                return
+            }
+            self.session.request(
                 endpoint,
                 method: .post,
                 headers: headers
-            ).responseDecodable(of: EmptyResponse.self) { response in
+            ).responseDecodable(of: EmptyResponse.self, decoder: self.decoder) { response in
                 promise(response.result)
             }
         }
@@ -200,12 +220,15 @@ final class NetworkService {
         let endpoint = baseURL.appending("api/v1/users/projects/search")
         let headers = self.headers
         return Future<ProjectResponse, AFError> { [weak self] promise in
-            self?.session.request(
+            guard let self = self else {
+                return
+            }
+            self.session.request(
                 endpoint,
                 method: .get,
                 headers: headers
             )
-            .responseDecodable(of: ProjectResponse.self) { response in
+            .responseDecodable(of: ProjectResponse.self, decoder: self.decoder) { response in
                 promise(response.result)
             }
         }
@@ -218,12 +241,15 @@ final class NetworkService {
         let endpoint = baseURL.appending("api/v1/users/projects/my")
         let headers = self.headers
         return Future<ProjectResponse, AFError> { [weak self] promise in
-            self?.session.request(
+            guard let self = self else {
+                return
+            }
+            self.session.request(
                 endpoint,
                 method: .get,
                 headers: headers
             )
-            .responseDecodable(of: ProjectResponse.self) { response in
+            .responseDecodable(of: ProjectResponse.self, decoder: self.decoder) { response in
                 promise(response.result)
             }
         }

@@ -120,6 +120,7 @@ class ProjectsTinderViewController: UIViewController {
         content.backgroundColor = .white
         
         card.content = content
+        content.layer.cornerRadius = 8
 
         let leftOverlay = UIView()
         leftOverlay.layer.cornerRadius = 8
