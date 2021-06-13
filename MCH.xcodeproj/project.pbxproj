@@ -18,7 +18,6 @@
 		5C00C78526749F9F004430E7 /* DependenciesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C00C78426749F9F004430E7 /* DependenciesFactory.swift */; };
 		5C00C78726749FCB004430E7 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C00C78626749FCB004430E7 /* UIViewController.swift */; };
 		5C00C78A26749FFD004430E7 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C00C78926749FFD004430E7 /* NetworkService.swift */; };
-		5C00C78C2674A006004430E7 /* INetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C00C78B2674A006004430E7 /* INetworkService.swift */; };
 		5C00C78E2674A052004430E7 /* EventsListViewController+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C00C78D2674A052004430E7 /* EventsListViewController+View.swift */; };
 		5C00C7912674A0C9004430E7 /* EventCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C00C7902674A0C9004430E7 /* EventCollectionViewCell.swift */; };
 		5C00C7932674A2AB004430E7 /* UICollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C00C7922674A2AB004430E7 /* UICollectionView.swift */; };
@@ -28,13 +27,16 @@
 		5C00C79F2674B6EF004430E7 /* UserEventsListViewController+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C00C79E2674B6EF004430E7 /* UserEventsListViewController+View.swift */; };
 		5C00C7A22674B9D6004430E7 /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C00C7A12674B9D6004430E7 /* EventViewController.swift */; };
 		5C00C7A42674B9EA004430E7 /* EventViewController+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C00C7A32674B9EA004430E7 /* EventViewController+View.swift */; };
-		5C00C7A72674BA49004430E7 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C00C7A62674BA49004430E7 /* Event.swift */; };
+		5C00C7A72674BA49004430E7 /* EventsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C00C7A62674BA49004430E7 /* EventsModels.swift */; };
 		5C00C7A92674C908004430E7 /* SpinnerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C00C7A82674C908004430E7 /* SpinnerViewController.swift */; };
 		5C00C7AC2674D396004430E7 /* AuthStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C00C7AB2674D396004430E7 /* AuthStorage.swift */; };
 		5C00C7AF2674D78A004430E7 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C00C7AE2674D78A004430E7 /* AuthViewController.swift */; };
 		5C00C7B12674D793004430E7 /* AuthNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C00C7B02674D793004430E7 /* AuthNavigationController.swift */; };
 		5C00C7B32674DEBB004430E7 /* Notificaitons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C00C7B22674DEBB004430E7 /* Notificaitons.swift */; };
 		5C00C7B82674F034004430E7 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C00C7B72674F034004430E7 /* Logger.swift */; };
+		5C00C7BB2675F482004430E7 /* EventsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C00C7BA2675F482004430E7 /* EventsService.swift */; };
+		5C00C7BD2675F721004430E7 /* EventsParticipationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C00C7BC2675F721004430E7 /* EventsParticipationService.swift */; };
+		5C00C7BF2675F966004430E7 /* AuthModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C00C7BE2675F966004430E7 /* AuthModels.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,7 +52,6 @@
 		5C00C78426749F9F004430E7 /* DependenciesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependenciesFactory.swift; sourceTree = "<group>"; };
 		5C00C78626749FCB004430E7 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		5C00C78926749FFD004430E7 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
-		5C00C78B2674A006004430E7 /* INetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INetworkService.swift; sourceTree = "<group>"; };
 		5C00C78D2674A052004430E7 /* EventsListViewController+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EventsListViewController+View.swift"; sourceTree = "<group>"; };
 		5C00C7902674A0C9004430E7 /* EventCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCollectionViewCell.swift; sourceTree = "<group>"; };
 		5C00C7922674A2AB004430E7 /* UICollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionView.swift; sourceTree = "<group>"; };
@@ -60,13 +61,16 @@
 		5C00C79E2674B6EF004430E7 /* UserEventsListViewController+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserEventsListViewController+View.swift"; sourceTree = "<group>"; };
 		5C00C7A12674B9D6004430E7 /* EventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
 		5C00C7A32674B9EA004430E7 /* EventViewController+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EventViewController+View.swift"; sourceTree = "<group>"; };
-		5C00C7A62674BA49004430E7 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		5C00C7A62674BA49004430E7 /* EventsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsModels.swift; sourceTree = "<group>"; };
 		5C00C7A82674C908004430E7 /* SpinnerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerViewController.swift; sourceTree = "<group>"; };
 		5C00C7AB2674D396004430E7 /* AuthStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStorage.swift; sourceTree = "<group>"; };
 		5C00C7AE2674D78A004430E7 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		5C00C7B02674D793004430E7 /* AuthNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthNavigationController.swift; sourceTree = "<group>"; };
 		5C00C7B22674DEBB004430E7 /* Notificaitons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notificaitons.swift; sourceTree = "<group>"; };
 		5C00C7B72674F034004430E7 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		5C00C7BA2675F482004430E7 /* EventsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsService.swift; sourceTree = "<group>"; };
+		5C00C7BC2675F721004430E7 /* EventsParticipationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsParticipationService.swift; sourceTree = "<group>"; };
+		5C00C7BE2675F966004430E7 /* AuthModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthModels.swift; sourceTree = "<group>"; };
 		686FE9E66911C84FC519945E /* Pods_MCH.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MCH.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E32671399E93708E5F35B49 /* Pods-MCH.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MCH.debug.xcconfig"; path = "Target Support Files/Pods-MCH/Pods-MCH.debug.xcconfig"; sourceTree = "<group>"; };
 		BA6C91DAB428496D96FFCD88 /* Pods-MCH.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MCH.release.xcconfig"; path = "Target Support Files/Pods-MCH/Pods-MCH.release.xcconfig"; sourceTree = "<group>"; };
@@ -179,6 +183,7 @@
 		5C00C78326749F46004430E7 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				5C00C7B92675F470004430E7 /* EventsService */,
 				5C00C7AA2674D37F004430E7 /* AuthStorage */,
 				5C00C7A52674BA41004430E7 /* Models */,
 				5C00C78826749FF0004430E7 /* NetworkService */,
@@ -191,7 +196,6 @@
 			isa = PBXGroup;
 			children = (
 				5C00C78926749FFD004430E7 /* NetworkService.swift */,
-				5C00C78B2674A006004430E7 /* INetworkService.swift */,
 				5C00C7B72674F034004430E7 /* Logger.swift */,
 			);
 			path = NetworkService;
@@ -236,7 +240,8 @@
 		5C00C7A52674BA41004430E7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				5C00C7A62674BA49004430E7 /* Event.swift */,
+				5C00C7A62674BA49004430E7 /* EventsModels.swift */,
+				5C00C7BE2675F966004430E7 /* AuthModels.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -256,6 +261,15 @@
 				5C00C7B02674D793004430E7 /* AuthNavigationController.swift */,
 			);
 			path = Auth;
+			sourceTree = "<group>";
+		};
+		5C00C7B92675F470004430E7 /* EventsService */ = {
+			isa = PBXGroup;
+			children = (
+				5C00C7BA2675F482004430E7 /* EventsService.swift */,
+				5C00C7BC2675F721004430E7 /* EventsParticipationService.swift */,
+			);
+			path = EventsService;
 			sourceTree = "<group>";
 		};
 		979DFA74F33DE849BB7C1261 /* Frameworks */ = {
@@ -387,7 +401,9 @@
 				5C00C7A92674C908004430E7 /* SpinnerViewController.swift in Sources */,
 				5C00C78A26749FFD004430E7 /* NetworkService.swift in Sources */,
 				5C00C78526749F9F004430E7 /* DependenciesFactory.swift in Sources */,
-				5C00C7A72674BA49004430E7 /* Event.swift in Sources */,
+				5C00C7BB2675F482004430E7 /* EventsService.swift in Sources */,
+				5C00C7A72674BA49004430E7 /* EventsModels.swift in Sources */,
+				5C00C7BF2675F966004430E7 /* AuthModels.swift in Sources */,
 				5C00C7B12674D793004430E7 /* AuthNavigationController.swift in Sources */,
 				5C00C7912674A0C9004430E7 /* EventCollectionViewCell.swift in Sources */,
 				5C00C7A42674B9EA004430E7 /* EventViewController+View.swift in Sources */,
@@ -398,10 +414,10 @@
 				5C00C7B32674DEBB004430E7 /* Notificaitons.swift in Sources */,
 				5C00C77526749312004430E7 /* RootTabBarController.swift in Sources */,
 				5C00C79D2674B6E3004430E7 /* UserEventsListViewController.swift in Sources */,
+				5C00C7BD2675F721004430E7 /* EventsParticipationService.swift in Sources */,
 				5C00C78226749E05004430E7 /* EventsNavigationController.swift in Sources */,
 				5C00C7B82674F034004430E7 /* Logger.swift in Sources */,
 				5C00C75F26749085004430E7 /* AppDelegate.swift in Sources */,
-				5C00C78C2674A006004430E7 /* INetworkService.swift in Sources */,
 				5C00C7AC2674D396004430E7 /* AuthStorage.swift in Sources */,
 				5C00C7A22674B9D6004430E7 /* EventViewController.swift in Sources */,
 			);

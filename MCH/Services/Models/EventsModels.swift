@@ -21,6 +21,7 @@ struct Event: Decodable {
         case website
         case address
         case id
+        case isParticipating = "is_participant"
     }
 
     let imageURL: URL
@@ -63,4 +64,9 @@ struct Event: Decodable {
         let latitude: Double
         let description: String
     }
+}
+
+struct EventsResponse: Decodable {
+
+    let data: [Event]
 }

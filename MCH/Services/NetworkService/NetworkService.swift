@@ -9,7 +9,7 @@ import Alamofire
 import Foundation
 import Combine
 
-final class NetworkService: INetworkService {
+final class NetworkService {
 
     private let baseURL = "http://192.168.1.7:8080/"
     private let session = Session(
@@ -29,16 +29,14 @@ final class NetworkService: INetworkService {
         ]
     }
 
-    func loadEvents() -> AnyPublisher<[Event], Never> {
-        Future<EventsResponse, AFError> { [weak self] promise in
-            guard let self = self else {
-                return
-            }
-
-            self.session.request(
-                self.baseURL.appending("api/v1/events"),
+    func obtainEvents() -> AnyPublisher<[Event], Never> {
+        let endpoint = baseURL.appending("api/v1/events")
+        let headers = self.headers
+        return Future<EventsResponse, AFError> { [weak self] promise in
+            self?.session.request(
+                endpoint,
                 method: .get,
-                headers: self.headers
+                headers: headers
             )
             .responseDecodable(of: EventsResponse.self) { response in
                 promise(response.result)
@@ -49,58 +47,40 @@ final class NetworkService: INetworkService {
         .eraseToAnyPublisher()
     }
 
-    func participateInEvent(event: Event) -> AnyPublisher<Void, Never> {
-        Future<Void, Never> { promise in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                promise(
-                    .success(())
-                )
-            }
-        }.eraseToAnyPublisher()
-    }
-
     func auth(login: String, password: String) -> AnyPublisher<AuthResponse, AFError> {
-        Future<AuthResponse, AFError> { [weak self] promise in
-            guard let self = self else {
-                return
-            }
-
-            self.session.request(
-                self.baseURL.appending("api/v1/auth"),
+        let endpoint = baseURL.appending("api/v1/auth")
+        let headers = self.headers
+        return Future<AuthResponse, AFError> { [weak self] promise in
+            self?.session.request(
+                endpoint,
                 method: .post,
                 parameters: AuthParameters(email: login, password: password),
                 encoder: JSONParameterEncoder.default,
-                headers: self.headers
+                headers: headers
             )
             .responseDecodable(of: AuthResponse.self) { response in
                 promise(response.result)
             }
         }.eraseToAnyPublisher()
     }
-}
 
-struct AuthParameters: Encodable {
-    let email: String
-    let password: String
-}
+    func participateInEvent(eventID: String) -> AnyPublisher<Void, AFError> {
+        let endpoint = baseURL.appending("api/v1/\(eventID)/participate")
+        let headers = self.headers
 
-struct AuthResponse: Decodable {
+        return Future<Void, AFError> { [weak self] promise in
+            self?.session.request(
+                endpoint,
+                method: .post,
+                headers: headers
+            )
+            .response { response in
+                if let error = response.error {
+                    return promise(.failure(error))
+                }
 
-    let data: Data
-
-    struct Data: Decodable {
-        enum CodingKeys: String, CodingKey {
-            case token
-            case isWrongPassword = "is_wrong_password"
-            case isNotExists = "is_not_exists"
-        }
-        let token: String
-        let isWrongPassword: Bool
-        let isNotExists: Bool
+                promise(.success(()))
+            }
+        }.eraseToAnyPublisher()
     }
-}
-
-struct EventsResponse: Decodable {
-
-    let data: [Event]
 }

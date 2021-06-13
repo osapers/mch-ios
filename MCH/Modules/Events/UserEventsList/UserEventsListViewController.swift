@@ -16,7 +16,6 @@ class UserEventsListViewController: UIViewController {
     }
 
     var isLoading = true
-    var events: [Event] = []
 
     lazy var collectionView = UICollectionView(
         frame: view.bounds,
@@ -24,21 +23,36 @@ class UserEventsListViewController: UIViewController {
     ).configureForAutoLayout()
     private var cancellableBag: [AnyCancellable] = []
 
-    private lazy var networkService = dependencies.networkService()
+    lazy var eventsService = dependencies.eventsService()
+    var events: [Event] {
+        eventsService.events.filter { $0.isParticipating == true }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
         collectionView.isUserInteractionEnabled = false
-        networkService
-            .loadEvents()
+        eventsService
+            .eventsChangePublisher
+            .sink { [weak self] _ in
+                self?.loadEvents()
+            }
+            .store(in: &cancellableBag)
+        loadEvents()
+        let refreshControl = UIRefreshControl()
+        collectionView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(loadEvents), for: .valueChanged)
+    }
+
+    @objc private func loadEvents() {
+        eventsService
+            .obtainEvents()
             .sink { [weak self] events in
                 guard let self = self else {
                     return
                 }
                 
                 self.isLoading = false
-                self.events = events
                 self.collectionView.reloadWithAnimation()
                 self.collectionView.isUserInteractionEnabled = true
             }

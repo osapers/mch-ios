@@ -41,7 +41,7 @@ extension EventsListViewController:
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        isLoading ? 10 : events.count
+        isLoading ? 10 : eventsService.events.count
     }
 
     func collectionView(
@@ -54,11 +54,11 @@ extension EventsListViewController:
         )
 
         (cell as? EventCollectionViewCell).map { cell in
-            cell.bindModel(model: events[indexPath.row])
+            cell.bindModel(model: eventsService.events[indexPath.row])
             cell.didPressHandler = { [weak self] in
                 self.map {
                     let controller = EventViewController()
-                    let event = $0.events[indexPath.row]
+                    let event = $0.eventsService.events[indexPath.row]
                     controller.event = event
                     controller.hidesBottomBarWhenPushed = true
                     $0.navigationController?.pushViewController(

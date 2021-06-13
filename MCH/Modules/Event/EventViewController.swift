@@ -16,7 +16,7 @@ class EventViewController: UIViewController {
     var event: Event!
 
     private let eventStore = EKEventStore()
-    private lazy var networkService = dependencies.networkService()
+    private lazy var eventsParticipationService = dependencies.eventsParticipationService
     private var cancellableBag: [AnyCancellable] = []
 
     let iconView = UIImageView().configureForAutoLayout()
@@ -40,9 +40,16 @@ class EventViewController: UIViewController {
     @objc private func handlePatricipateButtonTap() {
         let loadingView = startLoading()
 
-        networkService
-            .participateInEvent(event: event)
-            .sink { [weak self] in
+        eventsParticipationService
+            .participateInEvent(event)
+            .sink { [weak self] error in
+                switch error {
+                case .failure(let error):
+                    self?.handleError(error: error, loadingView: loadingView)
+                case .finished:
+                    break
+                }
+            } receiveValue: { [weak self] in
                 guard let self = self else {
                     return
                 }
@@ -63,6 +70,7 @@ class EventViewController: UIViewController {
     }
 
     private func handleAddToCalendar() {
+        removeParticipateButton()
         eventStore.requestAccess(to: .event) { (granted, error) in
             DispatchQueue.main.async {
                 guard granted, error == nil else {
@@ -82,7 +90,6 @@ class EventViewController: UIViewController {
                 event.calendar = self.eventStore.defaultCalendarForNewEvents
                 do {
                     try self.eventStore.save(event, span: .thisEvent)
-                    self.removeParticipateButton()
                     let alert = UIAlertController(title: "Успешно", message: "Событие было добавлено в Ваш календарь", preferredStyle: .alert)
                     let action = UIAlertAction(title: "ОК", style: .default, handler: nil)
                     alert.addAction(action)
@@ -117,6 +124,9 @@ class EventViewController: UIViewController {
         addressLabel.text = "Адрес: \(model.address.description)"
         emailLabel.text = "Электронная почта: \(model.email)"
         websiteLabel.text = "Сайт: \(model.website)"
+        if model.isParticipating {
+            participateButton.removeFromSuperview()
+        }
     }
 }
 

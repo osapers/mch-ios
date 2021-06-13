@@ -35,4 +35,9 @@ extension UIViewController {
         alert.addAction(action)
         present(alert, animated: true, completion: nil)
     }
+
+    func handleError(error: AFError, loadingView: UIViewController) {
+        stopLoading(loadingView: loadingView)
+        showError(error: error)
+    }
 }
