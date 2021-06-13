@@ -7,11 +7,18 @@
 
 import UIKit
 import Shuffle_iOS
+import Combine
 
 class ProjectsTinderViewController: UIViewController {
 
     let cardStack = SwipeCardStack().configureForAutoLayout()
     let shadowView = UIView().configureForAutoLayout()
+    var dataSource = [1, 2, 3, 4, 5]
+    private let participateSubject = PassthroughSubject<Void, Never>()
+    var participatePublisher: AnyPublisher<Void, Never> {
+        participateSubject.eraseToAnyPublisher()
+    }
+    var zeroScreen: UIView?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +29,7 @@ class ProjectsTinderViewController: UIViewController {
         cardStack.clipsToBounds = false
         cardStack.frame = view.safeAreaLayoutGuide.layoutFrame
         cardStack.dataSource = self
+        cardStack.delegate = self
         setupShadowView()
 
         cardStack.isHidden = true
@@ -100,6 +108,28 @@ class ProjectsTinderViewController: UIViewController {
         shadowView.layer.masksToBounds = false
         shadowView.layer.rasterizationScale = UIScreen.main.scale
     }
+
+    private func handleZeroScreen() {
+        if !dataSource.isEmpty {
+            zeroScreen?.removeFromSuperview()
+            return
+        }
+        
+
+        shadowView.isHidden = true
+        cardStack.isHidden = true
+        let zeroScreen = UIView().configureForAutoLayout()
+        zeroScreen.backgroundColor = .white
+        let noResultLabel = UILabel().configureForAutoLayout()
+        zeroScreen.addSubview(noResultLabel)
+        noResultLabel.text = "На данный момент нет подходящих проектов"
+        noResultLabel.numberOfLines = 0
+        noResultLabel.autoCenterInSuperview()
+        view.addSubview(zeroScreen)
+        zeroScreen.autoPinEdgesToSuperviewMargins()
+        view.bringSubviewToFront(zeroScreen)
+        self.zeroScreen = zeroScreen
+    }
 }
 
 extension ProjectsTinderViewController: SwipeCardStackDataSource, SwipeCardStackDelegate {
@@ -109,11 +139,21 @@ extension ProjectsTinderViewController: SwipeCardStackDataSource, SwipeCardStack
     }
 
     func numberOfCards(in cardStack: SwipeCardStack) -> Int {
-        return 50
+        return dataSource.count
     }
 
     func cardStack(_ cardStack: SwipeCardStack, didSelectCardAt index: Int) { }
-    func cardStack(_ cardStack: SwipeCardStack, didSwipeCardAt index: Int, with direction: SwipeDirection) { }
+    func cardStack(_ cardStack: SwipeCardStack, didSwipeCardAt index: Int, with direction: SwipeDirection) {
+        switch direction {
+        case .right:
+            participateSubject.send(())
+        default:
+            break
+        }
+    }
     func cardStack(_ cardStack: SwipeCardStack, didUndoCardAt index: Int, from direction: SwipeDirection) { }
-    func didSwipeAllCards(_ cardStack: SwipeCardStack) { }
+    func didSwipeAllCards(_ cardStack: SwipeCardStack) {
+        dataSource = []
+        handleZeroScreen()
+    }
 }

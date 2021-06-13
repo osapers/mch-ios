@@ -35,11 +35,9 @@ extension UICollectionViewLayout {
 extension UICollectionView {
     
     func reloadWithAnimation(completion: (() -> Void)? = nil) {
-        DispatchQueue.main.async {
-            self.performBatchUpdates {
-                let indexSet = IndexSet(integersIn: 0...0)
-                self.reloadSections(indexSet)
-            } completion: { _ in completion?() }
-        }
+        performBatchUpdates {
+            let indexSet = IndexSet(integersIn: 0...0)
+            self.reloadSections(indexSet)
+        } completion: { _ in completion?() }
     }
 }

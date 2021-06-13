@@ -35,5 +35,9 @@ extension ProjectsService {
             .map { _ in () }
             .eraseToAnyPublisher()
     }
+
+    func createProject() -> AnyPublisher<Void, Never> {
+        networkService.createProject()
+    }
 }
 

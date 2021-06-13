@@ -26,24 +26,24 @@ class ProjectsListViewController: UIViewController {
     private var cancellableBag: [AnyCancellable] = []
     
     lazy var eventsService = dependencies.eventsService()
+    lazy var projectsService = dependencies.projectsService
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
         createButton.addTarget(self, action: #selector(handleCreateButtonTap), for: .touchUpInside)
-        collectionView.isUserInteractionEnabled = false
         eventsService
             .eventsChangePublisher
             .sink { [weak self] _ in
                 self?.collectionView.reloadData()
             }
             .store(in: &cancellableBag)
-        loadEvents()
         let refreshControl = RefreshControl()
         refreshControl.onValueChange { [weak self] _ in
             self?.loadEvents()
         }
-        
+
+        reloadData()
         collectionView.refreshControl = refreshControl
     }
     
@@ -56,9 +56,10 @@ class ProjectsListViewController: UIViewController {
                 }
                 
                 self.isLoading = false
-                self.collectionView.reloadWithAnimation()
+                self.createButton.isHidden = false
                 self.collectionView.isUserInteractionEnabled = true
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    self.collectionView.reloadWithAnimation()
                     self.collectionView.refreshControl?.endRefreshing()
                 }
             }
@@ -66,20 +67,40 @@ class ProjectsListViewController: UIViewController {
     }
 
     @objc func searchProject() {
-        let projectsListViewContoller = ProjectsTinderViewController()
-        navigationController?.pushViewController(projectsListViewContoller, animated: true)
+        let projectsTinderViewController = ProjectsTinderViewController()
+        projectsTinderViewController
+            .participatePublisher
+            .sink { [weak self] _ in
+                guard let self = self else {
+                    return
+                }
+
+                self.isLoading = true
+                self.collectionView.reloadData()
+                self.collectionView.isUserInteractionEnabled = false
+                self.loadEvents()
+            }
+            .store(in: &cancellableBag)
+        navigationController?.pushViewController(projectsTinderViewController, animated: true)
+    }
+
+    private func reloadData() {
+        isLoading = true
+        collectionView.reloadWithAnimation()
+        collectionView.isUserInteractionEnabled = false
+        loadEvents()
     }
 
     @objc func handleCreateButtonTap() {
-        isLoading = true
-        collectionView.isUserInteractionEnabled = false
-        createButton.isHidden = true
-        collectionView.reloadWithAnimation()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            self.isLoading = false
-            self.collectionView.isUserInteractionEnabled = true
-            self.createButton.isHidden = false
-            self.collectionView.reloadWithAnimation()
-        }
+        let loadingView = startLoading()
+        projectsService
+            .createProject()
+            .sink { [weak self] _ in
+                if let self = self {
+                    self.stopLoading(loadingView: loadingView)
+                    self.reloadData()
+                }
+            }
+            .store(in: &cancellableBag)
     }
 }
