@@ -39,5 +39,9 @@ extension ProjectsService {
     func createProject() -> AnyPublisher<Void, Never> {
         networkService.createProject()
     }
+
+    func markProjectAsViewed(projecID: String) -> AnyPublisher<Void, Never> {
+        networkService.markProjectAsViewed(projecID: projecID)
+    }
 }
 

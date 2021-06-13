@@ -14,10 +14,13 @@ class ProjectsTinderViewController: UIViewController {
     let cardStack = SwipeCardStack().configureForAutoLayout()
     let shadowView = UIView().configureForAutoLayout()
     var dataSource = [1, 2, 3, 4, 5]
+
+    private var cancellableBag: [AnyCancellable] = []
     private let participateSubject = PassthroughSubject<Void, Never>()
     var participatePublisher: AnyPublisher<Void, Never> {
         participateSubject.eraseToAnyPublisher()
     }
+    private lazy var projectsService = dependencies.projectsService
     var zeroScreen: UIView?
 
     override func viewDidLoad() {
@@ -115,7 +118,6 @@ class ProjectsTinderViewController: UIViewController {
             return
         }
         
-
         shadowView.isHidden = true
         cardStack.isHidden = true
         let zeroScreen = UIView().configureForAutoLayout()
@@ -144,6 +146,8 @@ extension ProjectsTinderViewController: SwipeCardStackDataSource, SwipeCardStack
 
     func cardStack(_ cardStack: SwipeCardStack, didSelectCardAt index: Int) { }
     func cardStack(_ cardStack: SwipeCardStack, didSwipeCardAt index: Int, with direction: SwipeDirection) {
+        let projectID = dataSource[index]
+        projectsService.markProjectAsViewed(projecID: "\(projectID)").sink { _ in }.store(in: &cancellableBag)
         switch direction {
         case .right:
             participateSubject.send(())

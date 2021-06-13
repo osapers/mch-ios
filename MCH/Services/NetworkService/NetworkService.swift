@@ -159,6 +159,24 @@ final class NetworkService {
         .replaceError(with: ())
         .eraseToAnyPublisher()
     }
+
+    func markProjectAsViewed(projecID: String) -> AnyPublisher<Void, Never> {
+        let endpoint = baseURL.appending("api/v1/users/projects/generate")
+        let headers = self.headers
+        
+        return Future<EmptyResponse, AFError> { [weak self] promise in
+            self?.session.request(
+                endpoint,
+                method: .post,
+                headers: headers
+            ).responseDecodable(of: EmptyResponse.self) { response in
+                promise(response.result)
+            }
+        }
+        .map { _ in () }
+        .replaceError(with: ())
+        .eraseToAnyPublisher()
+    }
 }
 
 fileprivate struct EmptyResponse: Decodable {
