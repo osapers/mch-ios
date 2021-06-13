@@ -14,7 +14,7 @@ extension ProjectsListViewController {
         view.addSubview(collectionView)
         collectionView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .bottom)
         collectionView.register(
-            EventCollectionViewCell.self,
+            ProjectCollectionViewCell.self,
             forCellWithReuseIdentifier: Constants.reuseIdentifier
         )
         collectionView.register(
@@ -61,7 +61,7 @@ extension ProjectsListViewController:
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        isLoading ? 10 : eventsService.events.count
+        isLoading ? 10 : projects.count
     }
     
     func collectionView(
@@ -73,18 +73,15 @@ extension ProjectsListViewController:
             for: indexPath
         )
         
-        (cell as? EventCollectionViewCell).map { cell in
-            cell.bindModel(model: eventsService.events[indexPath.row])
+        (cell as? ProjectCollectionViewCell).map { cell in
+            cell.bindModel(model: projects[indexPath.row])
+            cell.delegate = self
             cell.didPressHandler = { [weak self] in
                 self.map {
-                    let controller = EventViewController()
-                    let event = $0.eventsService.events[indexPath.row]
-                    controller.event = event
-                    controller.hidesBottomBarWhenPushed = true
-                    $0.navigationController?.pushViewController(
-                        controller,
-                        animated: true
-                    )
+                    let alert = UIAlertController(title: "Демо режим просмотра проекта", message: "Здесь должна открываться полная информация о проекте", preferredStyle: .alert)
+                    let okAction = UIAlertAction(title: "ОК", style: .default, handler: nil)
+                    alert.addAction(okAction)
+                    $0.present(alert, animated: true, completion: nil)
                 }
             }
         }

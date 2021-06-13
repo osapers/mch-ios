@@ -51,6 +51,7 @@
 		5C61EB0626767305006EE292 /* ProjectListViewController+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C61EB0526767305006EE292 /* ProjectListViewController+View.swift */; };
 		5C61EB0926767355006EE292 /* ProjectsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C61EB0826767355006EE292 /* ProjectsService.swift */; };
 		5C61EB0B2676827F006EE292 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C61EB0A2676827F006EE292 /* Project.swift */; };
+		5C61EB0E2676A2FC006EE292 /* ProjectCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C61EB0D2676A2FC006EE292 /* ProjectCollectionViewCell.swift */; };
 		5CFA09CC2676171B008F7686 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFA09CB2676171B008F7686 /* EditProfileViewController.swift */; };
 		5CFA09CF26761BE8008F7686 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFA09CE26761BE8008F7686 /* UserService.swift */; };
 		5CFA09D126761BFF008F7686 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFA09D026761BFF008F7686 /* User.swift */; };
@@ -103,6 +104,7 @@
 		5C61EB0526767305006EE292 /* ProjectListViewController+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProjectListViewController+View.swift"; sourceTree = "<group>"; };
 		5C61EB0826767355006EE292 /* ProjectsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectsService.swift; sourceTree = "<group>"; };
 		5C61EB0A2676827F006EE292 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
+		5C61EB0D2676A2FC006EE292 /* ProjectCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCollectionViewCell.swift; sourceTree = "<group>"; };
 		5CFA09CB2676171B008F7686 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		5CFA09CE26761BE8008F7686 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		5CFA09D026761BFF008F7686 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -378,6 +380,7 @@
 			isa = PBXGroup;
 			children = (
 				5C61EB012676729C006EE292 /* ProjectTinderView.swift */,
+				5C61EB0D2676A2FC006EE292 /* ProjectCollectionViewCell.swift */,
 			);
 			path = ProjectTinderView;
 			sourceTree = "<group>";
@@ -554,6 +557,7 @@
 				5C17D7DD26760E2F00775406 /* ProjectsNavigationController.swift in Sources */,
 				5C17D7E426760EA500775406 /* ProjectsListViewController.swift in Sources */,
 				5C00C7A22674B9D6004430E7 /* EventViewController.swift in Sources */,
+				5C61EB0E2676A2FC006EE292 /* ProjectCollectionViewCell.swift in Sources */,
 				5CFA09D326762941008F7686 /* TextStyle.swift in Sources */,
 				5C61EB022676729C006EE292 /* ProjectTinderView.swift in Sources */,
 			);

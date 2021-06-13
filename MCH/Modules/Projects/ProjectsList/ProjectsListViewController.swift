@@ -11,7 +11,7 @@ import Combine
 class ProjectsListViewController: UIViewController {
     
     enum Constants {
-        static let reuseIdentifier = "EventCollectionViewCell"
+        static let reuseIdentifier = "ProjectCollectionViewCell"
         static let shimmerReuseIdentifier = "EventShimmerCollectionViewCell"
     }
 
@@ -25,19 +25,13 @@ class ProjectsListViewController: UIViewController {
 
     private var cancellableBag: [AnyCancellable] = []
     
-    lazy var eventsService = dependencies.eventsService()
     lazy var projectsService = dependencies.projectsService
+    var projects: [Project] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
         createButton.addTarget(self, action: #selector(handleCreateButtonTap), for: .touchUpInside)
-        eventsService
-            .eventsChangePublisher
-            .sink { [weak self] _ in
-                self?.collectionView.reloadData()
-            }
-            .store(in: &cancellableBag)
         let refreshControl = RefreshControl()
         refreshControl.onValueChange { [weak self] _ in
             self?.loadEvents()
@@ -48,20 +42,19 @@ class ProjectsListViewController: UIViewController {
     }
     
     private func loadEvents() {
-        eventsService
-            .obtainEvents()
-            .sink { [weak self] events in
+        projectsService
+            .obtainMyProjects()
+            .sink { [weak self] projects in
                 guard let self = self else {
                     return
                 }
                 
+                self.projects = projects
                 self.isLoading = false
                 self.createButton.isHidden = false
                 self.collectionView.isUserInteractionEnabled = true
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                    self.collectionView.reloadWithAnimation()
-                    self.collectionView.refreshControl?.endRefreshing()
-                }
+                self.collectionView.reloadWithAnimation()
+                self.collectionView.refreshControl?.endRefreshing()
             }
             .store(in: &cancellableBag)
     }
@@ -75,16 +68,31 @@ class ProjectsListViewController: UIViewController {
                     return
                 }
 
+                self.projects = []
                 self.isLoading = true
                 self.collectionView.reloadData()
                 self.collectionView.isUserInteractionEnabled = false
-                self.loadEvents()
+                self.projectsService
+                    .obtainMyProjects()
+                    .sink { [weak self] projects in
+                        guard let self = self else {
+                            return
+                        }
+                        
+                        self.projects = projects
+                        self.isLoading = false
+                        self.createButton.isHidden = false
+                        self.collectionView.isUserInteractionEnabled = true
+                        self.collectionView.reloadData()
+                    }
+                    .store(in: &self.cancellableBag)
             }
             .store(in: &cancellableBag)
         navigationController?.pushViewController(projectsTinderViewController, animated: true)
     }
 
     private func reloadData() {
+        projects = []
         isLoading = true
         createButton.isHidden = true
         collectionView.reloadWithAnimation()
@@ -93,7 +101,7 @@ class ProjectsListViewController: UIViewController {
     }
 
     @objc func handleCreateButtonTap() {
-        let alert = UIAlertController(title: "Демо режим создания проекта", message: "Здесь должна открывать форма создания", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Демо режим создания проекта", message: "Здесь должна открываться форма создания", preferredStyle: .alert)
         let createAction = UIAlertAction(title: "Создать шаблонный проект", style: .default) { _ in
             let loadingView = self.startLoading()
             self.projectsService
@@ -110,5 +118,41 @@ class ProjectsListViewController: UIViewController {
         alert.addAction(createAction)
         alert.addAction(cancelAction)
         self.present(alert, animated: true, completion: nil)
+    }
+}
+
+extension ProjectsListViewController: ProjectCollectionViewCellDelegate {
+
+    func didTapDeleteAtProject(_ projectID: String) {
+        let loadingView = startLoading()
+        projectsService
+            .removeProject(projectID: projectID)
+            .sink { [weak self] _ in
+                guard let self = self else {
+                    return
+                }
+
+                self.stopLoading(loadingView: loadingView)
+                self.reloadData()
+            }
+            .store(in: &cancellableBag)
+    }
+
+    func didTapEditAtProject(_ projectID: String) {
+        let alert = UIAlertController(title: "Демо режим проекта", message: "Здесь должна открываться форма редактирования", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "ОК", style: .destructive, handler: nil)
+        alert.addAction(okAction)
+        present(alert, animated: true, completion: nil)
+    }
+
+    func didTapFindUserAtProject(_ projectID: String) {
+        
+    }
+
+    func didTapChatAtProject(_ projectID: String) {
+        let alert = UIAlertController(title: "Демо режим проекта", message: "Здесь должна открываться комната проекта с подтверждением пользователей/чатом", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "ОК", style: .destructive, handler: nil)
+        alert.addAction(okAction)
+        present(alert, animated: true, completion: nil)
     }
 }

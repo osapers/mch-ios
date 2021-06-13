@@ -25,6 +25,8 @@ struct Project: Decodable {
         case launchDate = "launch_date"
         case industry
         case tagsIntersection = "tags_intersection"
+        case owner
+        case role
     }
     
     let imageURL: URL
@@ -35,8 +37,8 @@ struct Project: Decodable {
     let launchDate: Date
     let industry: String
     let tagsIntersection: [String]?
-
-    let owner = Owner(image: nil, firstName: "Александр", lastName: "Ходько")
+    let owner: Owner
+    let role: Role?
     
     enum ReadinessStage: String, Decodable {
         case idea
@@ -71,7 +73,41 @@ struct Project: Decodable {
         }
     }
 
-    struct Owner {
+    enum Role: String, Decodable {
+        case owner
+        case participant
+        case applicant
+        
+        var color: UIColor {
+            switch self {
+            case .owner:
+                return UIColor.Brand.green
+            case .participant:
+                return UIColor.orange
+            case .applicant:
+                return UIColor.red
+            }
+        }
+        
+        var description: String {
+            switch self {
+            case .owner:
+                return "Вы владелец этого проекта"
+            case .participant:
+                return "Вы участник этого проекта"
+            case .applicant:
+                return "Ожидайте подтверждения от владельца"
+            }
+        }
+    }
+
+    struct Owner: Decodable {
+        enum CodingKeys: String, CodingKey {
+            case image
+            case firstName = "first_name"
+            case lastName = "last_name"
+        }
+
         let image: String?
         let firstName: String
         let lastName: String

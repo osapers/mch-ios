@@ -70,6 +70,7 @@ class ProjectTinderView: UIView {
     private func setupProjectDescription() {
         addSubview(projectDescription)
         projectDescription.numberOfLines = 5
+        projectDescription.lineBreakMode = .byTruncatingTail
         projectDescription.autoPinEdge(.top, to: .bottom, of: projectSpecialization, withOffset: 8)
         projectDescription.autoPinEdge(toSuperviewEdge: .left, withInset: 16)
         projectDescription.autoPinEdge(toSuperviewEdge: .right, withInset: 16)
@@ -97,7 +98,7 @@ class ProjectTinderView: UIView {
         addSubview(tagsTitle)
         tagsTitle.autoPinEdge(.top, to: .bottom, of: projectRedinessDate, withOffset: 12)
         tagsTitle.autoPinEdge(toSuperviewEdge: .left, withInset: 16)
-        tagsTitle.attributedText = "Специализации".styled(.title1)
+        tagsTitle.attributedText = "Специализации:".styled(.title1)
     }
 
     private func setupTagsStackView() {
@@ -112,6 +113,7 @@ class ProjectTinderView: UIView {
 
     func setupOwnerView() {
         addSubview(ownerView)
+        ownerView.autoPinEdge(.top, to: .bottom, of: tagsStackView, withOffset: 12, relation: .greaterThanOrEqual)
         ownerView.autoSetDimension(.height, toSize: 64)
         ownerView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 12)
         ownerView.autoPinEdge(toSuperviewEdge: .left, withInset: 16)
@@ -121,7 +123,7 @@ class ProjectTinderView: UIView {
         ownerImage.autoPinEdge(toSuperviewEdge: .left)
         ownerImage.autoSetDimensions(to: CGSize(width: 64, height: 64))
         ownerImage.autoAlignAxis(toSuperviewAxis: .horizontal)
-        ownerImage.contentMode = .scaleAspectFit
+        ownerImage.contentMode = .scaleAspectFill
         ownerImage.clipsToBounds = true
         ownerImage.layer.cornerRadius = 32
         

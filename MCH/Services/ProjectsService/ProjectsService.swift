@@ -32,6 +32,10 @@ extension ProjectsService {
         networkService.obtainProjects()
     }
 
+    func obtainMyProjects() -> AnyPublisher<[Project], Never> {
+        networkService.obtainMyProjects()
+    }
+
     func createProject() -> AnyPublisher<Void, Never> {
         networkService.createProject()
     }
@@ -42,6 +46,10 @@ extension ProjectsService {
 
     func applyToProject(projectID: String) -> AnyPublisher<Void, Never> {
         networkService.applyToProject(projectID: projectID)
+    }
+
+    func removeProject(projectID: String) -> AnyPublisher<Void, Never> {
+        networkService.removeProject(projectID: projectID)
     }
 }
 
