@@ -146,7 +146,11 @@ extension ProjectsTinderViewController: SwipeCardStackDataSource, SwipeCardStack
     }
 
     func cardStack(_ cardStack: SwipeCardStack, didSelectCardAt index: Int) {
-        let alert = UIAlertController(title: "Демо режим просмотра проекта", message: "Здесь должна открываться полная информация о проекте", preferredStyle: .alert)
+        let alert = UIAlertController(
+            title: "Демо режим просмотра проекта",
+            message: "Здесь должна открываться полная информация о проекте",
+            preferredStyle: .alert
+        )
         let okAction = UIAlertAction(title: "ОК", style: .default, handler: nil)
         alert.addAction(okAction)
         self.present(alert, animated: true, completion: nil)

@@ -101,8 +101,15 @@ class ProjectsListViewController: UIViewController {
     }
 
     @objc func handleCreateButtonTap() {
-        let alert = UIAlertController(title: "Демо режим создания проекта", message: "Здесь должна открываться форма создания", preferredStyle: .alert)
-        let createAction = UIAlertAction(title: "Создать шаблонный проект", style: .default) { _ in
+        let alert = UIAlertController(
+            title: "Демо режим создания проекта",
+            message: "Здесь должна открываться форма создания проекта",
+            preferredStyle: .alert
+        )
+        let createAction = UIAlertAction(
+            title: "Создать шаблонный проект",
+            style: .default
+        ) { _ in
             let loadingView = self.startLoading()
             self.projectsService
                 .createProject()
@@ -139,18 +146,33 @@ extension ProjectsListViewController: ProjectCollectionViewCellDelegate {
     }
 
     func didTapEditAtProject(_ projectID: String) {
-        let alert = UIAlertController(title: "Демо режим проекта", message: "Здесь должна открываться форма редактирования", preferredStyle: .alert)
+        let alert = UIAlertController(
+            title: "Демо режим проекта",
+            message: "Здесь должна открываться форма редактирования",
+            preferredStyle: .alert
+        )
         let okAction = UIAlertAction(title: "ОК", style: .destructive, handler: nil)
         alert.addAction(okAction)
         present(alert, animated: true, completion: nil)
     }
 
     func didTapFindUserAtProject(_ projectID: String) {
-        
+        let alert = UIAlertController(
+            title: "Демо режим проекта",
+            message: "Здесь должен открываться экран аналогичный поиску проекта"
+            , preferredStyle: .alert
+        )
+        let okAction = UIAlertAction(title: "ОК", style: .destructive, handler: nil)
+        alert.addAction(okAction)
+        present(alert, animated: true, completion: nil)
     }
 
     func didTapChatAtProject(_ projectID: String) {
-        let alert = UIAlertController(title: "Демо режим проекта", message: "Здесь должна открываться комната проекта с подтверждением пользователей/чатом", preferredStyle: .alert)
+        let alert = UIAlertController(
+            title: "Демо режим проекта",
+            message: "Здесь должна открываться комната проекта с подтверждением пользователей/чатом",
+            preferredStyle: .alert
+        )
         let okAction = UIAlertAction(title: "ОК", style: .destructive, handler: nil)
         alert.addAction(okAction)
         present(alert, animated: true, completion: nil)
