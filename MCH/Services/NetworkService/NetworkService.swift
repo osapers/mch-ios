@@ -177,6 +177,24 @@ final class NetworkService {
         .replaceError(with: ())
         .eraseToAnyPublisher()
     }
+    
+    func obtainProjects() -> AnyPublisher<[Project], Never> {
+        let endpoint = baseURL.appending("api/v1/users/projects/search")
+        let headers = self.headers
+        return Future<ProjectResponse, AFError> { [weak self] promise in
+            self?.session.request(
+                endpoint,
+                method: .get,
+                headers: headers
+            )
+            .responseDecodable(of: ProjectResponse.self) { response in
+                promise(response.result)
+            }
+        }
+        .map { $0.data }
+        .replaceError(with: [])
+        .eraseToAnyPublisher()
+    }
 }
 
 fileprivate struct EmptyResponse: Decodable {

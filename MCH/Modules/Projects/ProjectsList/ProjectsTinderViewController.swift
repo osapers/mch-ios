@@ -11,17 +11,18 @@ import Combine
 
 class ProjectsTinderViewController: UIViewController {
 
-    let cardStack = SwipeCardStack().configureForAutoLayout()
-    let shadowView = UIView().configureForAutoLayout()
-    var dataSource = [1, 2, 3, 4, 5]
+    private let cardStack = SwipeCardStack().configureForAutoLayout()
+    private let shadowView = UIView().configureForAutoLayout()
 
     private var cancellableBag: [AnyCancellable] = []
     private let participateSubject = PassthroughSubject<Void, Never>()
+    private lazy var projectsService = dependencies.projectsService
+    private var zeroScreen: UIView?
+
+    var dataSource: [Project] = []
     var participatePublisher: AnyPublisher<Void, Never> {
         participateSubject.eraseToAnyPublisher()
     }
-    private lazy var projectsService = dependencies.projectsService
-    var zeroScreen: UIView?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,11 +39,21 @@ class ProjectsTinderViewController: UIViewController {
         cardStack.isHidden = true
         shadowView.isHidden = true
         let loadingView = startLoading()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            self.cardStack.isHidden = false
-            self.shadowView.isHidden = false
-            self.stopLoading(loadingView: loadingView)
-        }
+        projectsService
+            .obtainProjects()
+            .sink { [weak self] result in
+                guard let self = self else {
+                    return
+                }
+                
+                self.dataSource = result
+                self.cardStack.isHidden = false
+                self.shadowView.isHidden = false
+                self.cardStack.reloadData()
+                self.handleZeroScreen()
+                self.stopLoading(loadingView: loadingView)
+            }
+            .store(in: &cancellableBag)
     
         // id
         // тэги ()
@@ -63,32 +74,6 @@ class ProjectsTinderViewController: UIViewController {
             byRoundingCorners: .allCorners,
             cornerRadii: CGSize(width: 8, height: 8)
         ).cgPath
-    }
-    
-    @objc func card() -> SwipeCard {
-        let card = SwipeCard()
-        card.clipsToBounds = false
-        card.swipeDirections = [.left, .right]
-        let content = UIView()
-        content.backgroundColor = .white
-        let label = UILabel().configureForAutoLayout()
-        label.text = "hello world"
-        content.addSubview(label)
-        label.autoCenterInSuperview()
-        
-        card.content = content
-
-        let leftOverlay = UIView()
-        leftOverlay.layer.cornerRadius = 8
-        leftOverlay.backgroundColor = UIColor.red.withAlphaComponent(0.5)
-        
-        let rightOverlay = UIView()
-        rightOverlay.layer.cornerRadius = 8
-        rightOverlay.backgroundColor = UIColor.green.withAlphaComponent(0.5)
-        
-        card.setOverlays([.left: leftOverlay, .right: rightOverlay])
-        
-        return card
     }
 
     private func setupShadowView() {
@@ -132,22 +117,50 @@ class ProjectsTinderViewController: UIViewController {
         view.bringSubviewToFront(zeroScreen)
         self.zeroScreen = zeroScreen
     }
+
+    @objc private func makeCard(for index: Int) -> SwipeCard {
+        let project = dataSource[index]
+        let card = SwipeCard()
+        card.clipsToBounds = false
+        card.swipeDirections = [.left, .right]
+        let content = UIView()
+        content.backgroundColor = .white
+        let label = UILabel().configureForAutoLayout()
+        label.text = "hello world"
+        content.addSubview(label)
+        label.autoCenterInSuperview()
+        
+        card.content = content
+
+        let leftOverlay = UIView()
+        leftOverlay.layer.cornerRadius = 8
+        leftOverlay.backgroundColor = UIColor.red.withAlphaComponent(0.5)
+        
+        let rightOverlay = UIView()
+        rightOverlay.layer.cornerRadius = 8
+        rightOverlay.backgroundColor = UIColor.green.withAlphaComponent(0.5)
+        
+        card.setOverlays([.left: leftOverlay, .right: rightOverlay])
+        
+        return card
+    }
 }
 
 extension ProjectsTinderViewController: SwipeCardStackDataSource, SwipeCardStackDelegate {
 
     func cardStack(_ cardStack: SwipeCardStack, cardForIndexAt index: Int) -> SwipeCard {
-      return card()
+        makeCard(for: index)
     }
 
     func numberOfCards(in cardStack: SwipeCardStack) -> Int {
-        return dataSource.count
+        dataSource.count
     }
 
-    func cardStack(_ cardStack: SwipeCardStack, didSelectCardAt index: Int) { }
     func cardStack(_ cardStack: SwipeCardStack, didSwipeCardAt index: Int, with direction: SwipeDirection) {
-        let projectID = dataSource[index]
-        projectsService.markProjectAsViewed(projecID: "\(projectID)").sink { _ in }.store(in: &cancellableBag)
+        projectsService
+            .markProjectAsViewed(projecID: dataSource[index].id)
+            .sink { _ in }
+            .store(in: &cancellableBag)
         switch direction {
         case .right:
             participateSubject.send(())
@@ -155,7 +168,7 @@ extension ProjectsTinderViewController: SwipeCardStackDataSource, SwipeCardStack
             break
         }
     }
-    func cardStack(_ cardStack: SwipeCardStack, didUndoCardAt index: Int, from direction: SwipeDirection) { }
+
     func didSwipeAllCards(_ cardStack: SwipeCardStack) {
         dataSource = []
         handleZeroScreen()

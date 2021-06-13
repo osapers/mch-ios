@@ -50,6 +50,7 @@
 		5C61EB04267672A6006EE292 /* ProjectShimmerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C61EB03267672A6006EE292 /* ProjectShimmerCollectionViewCell.swift */; };
 		5C61EB0626767305006EE292 /* ProjectListViewController+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C61EB0526767305006EE292 /* ProjectListViewController+View.swift */; };
 		5C61EB0926767355006EE292 /* ProjectsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C61EB0826767355006EE292 /* ProjectsService.swift */; };
+		5C61EB0B2676827F006EE292 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C61EB0A2676827F006EE292 /* Project.swift */; };
 		5CFA09CC2676171B008F7686 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFA09CB2676171B008F7686 /* EditProfileViewController.swift */; };
 		5CFA09CF26761BE8008F7686 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFA09CE26761BE8008F7686 /* UserService.swift */; };
 		5CFA09D126761BFF008F7686 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFA09D026761BFF008F7686 /* User.swift */; };
@@ -101,6 +102,7 @@
 		5C61EB03267672A6006EE292 /* ProjectShimmerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectShimmerCollectionViewCell.swift; sourceTree = "<group>"; };
 		5C61EB0526767305006EE292 /* ProjectListViewController+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProjectListViewController+View.swift"; sourceTree = "<group>"; };
 		5C61EB0826767355006EE292 /* ProjectsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectsService.swift; sourceTree = "<group>"; };
+		5C61EB0A2676827F006EE292 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		5CFA09CB2676171B008F7686 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		5CFA09CE26761BE8008F7686 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		5CFA09D026761BFF008F7686 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -286,6 +288,7 @@
 				5C00C7A62674BA49004430E7 /* EventsModels.swift */,
 				5C00C7BE2675F966004430E7 /* AuthModels.swift */,
 				5CFA09D026761BFF008F7686 /* User.swift */,
+				5C61EB0A2676827F006EE292 /* Project.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -508,6 +511,7 @@
 				5C00C78E2674A052004430E7 /* EventsListViewController+View.swift in Sources */,
 				5C61EAFB26764FBB006EE292 /* SpecializationSearchViewController.swift in Sources */,
 				5C00C7A92674C908004430E7 /* SpinnerViewController.swift in Sources */,
+				5C61EB0B2676827F006EE292 /* Project.swift in Sources */,
 				5C17D7E026760E8C00775406 /* ProfileViewController.swift in Sources */,
 				5C00C78A26749FFD004430E7 /* NetworkService.swift in Sources */,
 				5C00C78526749F9F004430E7 /* DependenciesFactory.swift in Sources */,

@@ -29,11 +29,8 @@ extension ProjectsService {
         projectsChangeSubject.eraseToAnyPublisher()
     }
 
-    func obtainProjects() -> AnyPublisher<Void, Never> {
-        networkService
-            .obtainEvents()
-            .map { _ in () }
-            .eraseToAnyPublisher()
+    func obtainProjects() -> AnyPublisher<[Project], Never> {
+        networkService.obtainProjects()
     }
 
     func createProject() -> AnyPublisher<Void, Never> {

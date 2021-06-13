@@ -86,21 +86,29 @@ class ProjectsListViewController: UIViewController {
 
     private func reloadData() {
         isLoading = true
+        createButton.isHidden = true
         collectionView.reloadWithAnimation()
         collectionView.isUserInteractionEnabled = false
         loadEvents()
     }
 
     @objc func handleCreateButtonTap() {
-        let loadingView = startLoading()
-        projectsService
-            .createProject()
-            .sink { [weak self] _ in
-                if let self = self {
-                    self.stopLoading(loadingView: loadingView)
-                    self.reloadData()
+        let alert = UIAlertController(title: "Демо режим создания проекта", message: "Здесь должна открывать форма создания", preferredStyle: .alert)
+        let createAction = UIAlertAction(title: "Создать шаблонный проект", style: .default) { _ in
+            let loadingView = self.startLoading()
+            self.projectsService
+                .createProject()
+                .sink { [weak self] _ in
+                    if let self = self {
+                        self.stopLoading(loadingView: loadingView)
+                        self.reloadData()
+                    }
                 }
-            }
-            .store(in: &cancellableBag)
+                .store(in: &self.cancellableBag)
+        }
+        let cancelAction = UIAlertAction(title: "Отмена", style: .destructive, handler: nil)
+        alert.addAction(createAction)
+        alert.addAction(cancelAction)
+        self.present(alert, animated: true, completion: nil)
     }
 }
