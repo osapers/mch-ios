@@ -10,14 +10,14 @@ import Combine
 import Foundation
 
 final class EventsService {
-
+    
     private let networkService: NetworkService
     private let eventsParticipationService: EventsParticipationService
     private let eventsChangeSubject = PassthroughSubject<Void, Never>()
-
+    
     private(set) var events: [Event] = []
     private var cancellableBag: [AnyCancellable] = []
-
+    
     init(networkService: NetworkService, eventsParticipationService: EventsParticipationService) {
         self.networkService = networkService
         self.eventsParticipationService = eventsParticipationService
@@ -29,7 +29,7 @@ final class EventsService {
                         if event.id != eventID {
                             return event
                         }
-
+                        
                         var newEvent = event
                         newEvent.isParticipating = true
                         return newEvent
@@ -41,11 +41,11 @@ final class EventsService {
 }
 
 extension EventsService {
-
+    
     var eventsChangePublisher: AnyPublisher<Void, Never> {
         eventsChangeSubject.eraseToAnyPublisher()
     }
-
+    
     func obtainEvents() -> AnyPublisher<Void, Never> {
         networkService
             .obtainEvents()

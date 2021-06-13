@@ -8,7 +8,7 @@
 import UIKit
 
 extension UICollectionViewLayout {
-
+    
     static func makeTableViewLayout() -> UICollectionViewLayout {
         let size = NSCollectionLayoutSize(
             widthDimension: NSCollectionLayoutDimension.fractionalWidth(1),
@@ -23,17 +23,17 @@ extension UICollectionViewLayout {
             subitem: item,
             count: 1
         )
-
+        
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 8, trailing: 16)
         section.interGroupSpacing = 16
-
+        
         return UICollectionViewCompositionalLayout(section: section)
     }
 }
 
 extension UICollectionView {
-
+    
     func reloadWithAnimation(completion: (() -> Void)? = nil) {
         DispatchQueue.main.async {
             self.performBatchUpdates {

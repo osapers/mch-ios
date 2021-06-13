@@ -8,7 +8,7 @@
 import Foundation
 
 extension Notification.Name {
-
+    
     static var userAuthorized: Notification.Name {
         .init("UserAuthorized")
     }

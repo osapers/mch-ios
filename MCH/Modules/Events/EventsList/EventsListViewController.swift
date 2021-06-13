@@ -9,22 +9,22 @@ import UIKit
 import Combine
 
 class EventsListViewController: UIViewController {
-
+    
     enum Constants {
         static let reuseIdentifier = "EventCollectionViewCell"
         static let shimmerReuseIdentifier = "EventShimmerCollectionViewCell"
     }
-
+    
     var isLoading = true
-
+    
     lazy var collectionView = UICollectionView(
         frame: view.bounds,
         collectionViewLayout: UICollectionViewLayout.makeTableViewLayout()
     ).configureForAutoLayout()
     private var cancellableBag: [AnyCancellable] = []
-
+    
     lazy var eventsService = dependencies.eventsService()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
@@ -43,7 +43,7 @@ class EventsListViewController: UIViewController {
         
         collectionView.refreshControl = refreshControl
     }
-
+    
     private func loadEvents() {
         eventsService
             .obtainEvents()

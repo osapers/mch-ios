@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 struct Event: Decodable {
-
+    
     enum CodingKeys: String, CodingKey {
         case imageURL = "image"
         case name
@@ -23,7 +23,7 @@ struct Event: Decodable {
         case id
         case isParticipating = "is_participant"
     }
-
+    
     let imageURL: URL
     let name: String
     let shortDescription: String
@@ -35,7 +35,7 @@ struct Event: Decodable {
     let address: EventAddress
     let id: String
     var isParticipating: Bool = false
-
+    
     enum EventType: String, Decodable {
         case webinar = "webinar"
         case forum = "forum"
@@ -46,7 +46,7 @@ struct Event: Decodable {
         case demoDay = "demo_day"
         case roundTable = "round_table"
         case strategicSession = "strategic_session"
-
+        
         var color: UIColor {
             switch self {
             case .webinar:
@@ -69,7 +69,7 @@ struct Event: Decodable {
                 return UIColor.Brand.backgroundBlue
             }
         }
-
+        
         var description: String {
             switch self {
             case .webinar:
@@ -93,7 +93,7 @@ struct Event: Decodable {
             }
         }
     }
-
+    
     struct EventAddress: Decodable {
         enum CodingKeys: String, CodingKey {
             case longitude = "lon"
@@ -107,6 +107,6 @@ struct Event: Decodable {
 }
 
 struct EventsResponse: Decodable {
-
+    
     let data: [Event]
 }

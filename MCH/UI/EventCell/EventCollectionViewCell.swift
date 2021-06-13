@@ -10,7 +10,7 @@ import PureLayout
 import SDWebImage
 
 class EventCollectionViewCell: UICollectionViewCell {
-
+    
     let containerView = UIView().configureForAutoLayout()
     let eventIcon = UIImageView().configureForAutoLayout()
     let eventName = UILabel().configureForAutoLayout()
@@ -20,12 +20,12 @@ class EventCollectionViewCell: UICollectionViewCell {
     let eventDate = UILabel().configureForAutoLayout()
     let shadowView = UIView().configureForAutoLayout()
     let paritcipationLabel = UILabel().configureForAutoLayout()
-
+    
     var didPressHandler: (() -> Void)?
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-
+        
         setupContainerView()
         setupShadowView()
         setupEventIcon()
@@ -35,7 +35,7 @@ class EventCollectionViewCell: UICollectionViewCell {
         setupEventDate()
         setupParitcipationLabel()
     }
-
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         clipsToBounds = false
@@ -47,11 +47,11 @@ class EventCollectionViewCell: UICollectionViewCell {
             cornerRadii: CGSize(width: 8, height: 8)
         ).cgPath
     }
-
+    
     override func prepareForReuse() {
         eventIcon.sd_cancelCurrentImageLoad()
     }
-
+    
     private func setupContainerView() {
         addSubview(containerView)
         containerView.autoPinEdgesToSuperviewEdges()
@@ -75,7 +75,7 @@ class EventCollectionViewCell: UICollectionViewCell {
         shadowView.layer.masksToBounds = false
         shadowView.layer.rasterizationScale = UIScreen.main.scale
     }
-
+    
     private func setupEventIcon() {
         containerView.addSubview(eventIcon)
         eventIcon.autoSetDimensions(to: CGSize(width: 48, height: 48))
@@ -86,7 +86,7 @@ class EventCollectionViewCell: UICollectionViewCell {
         eventIcon.autoPinEdge(toSuperviewEdge: .top, withInset: 8)
         eventIcon.sd_imageIndicator = SDWebImageActivityIndicator.gray
     }
-
+    
     private func setupEventName() {
         containerView.addSubview(eventName)
         eventName.numberOfLines = 1
@@ -121,12 +121,12 @@ class EventCollectionViewCell: UICollectionViewCell {
         eventDate.autoPinEdge(toSuperviewEdge: .left, withInset: 16)
         eventDate.autoPinEdge(toSuperviewEdge: .bottom, withInset: 12)
     }
-
+    
     private func setupParitcipationLabel() {
         containerView.addSubview(paritcipationLabel)
         paritcipationLabel.autoAlignAxis(.horizontal, toSameAxisOf: eventDate)
         paritcipationLabel.autoPinEdge(toSuperviewEdge: .right, withInset: 16)
-        paritcipationLabel.text = "Вы участвуете"
+        paritcipationLabel.attributedText = "Вы участвуете".styled(.label, textColor: UIColor.Brand.green)
         paritcipationLabel.textColor = UIColor.Brand.green
     }
     
@@ -135,18 +135,18 @@ class EventCollectionViewCell: UICollectionViewCell {
     }
     
     func bindModel(model: Event) {
-        eventName.text = model.name
-        eventDescription.text = model.shortDescription
+        eventName.attributedText = model.name.styled(.title1)
+        eventDescription.attributedText = model.shortDescription.styled(.label)
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ru_RU")
         formatter.dateFormat = "EEEE, d MMM"
-        eventDate.text = formatter.string(from: model.date).capitalizingFirstLetter()
+        eventDate.attributedText = formatter.string(from: model.date).capitalizingFirstLetter().styled(.label)
         eventIcon.sd_setImage(with: model.imageURL)
-        eventType.text = model.type.description
+        eventType.attributedText = model.type.description.styled(.body)
         eventTypeView.backgroundColor = model.type.color
         paritcipationLabel.isHidden = !model.isParticipating
     }
-
+    
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         isUserInteractionEnabled = false
         let duration = 0.1
@@ -158,15 +158,15 @@ class EventCollectionViewCell: UICollectionViewCell {
             }
         }
     }
-
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         applyState(isHighlighted: true)
     }
-
+    
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         applyState(isHighlighted: false)
     }
-
+    
     private func applyState(isHighlighted: Bool) {
         let transform = isHighlighted ? CGAffineTransform(scaleX: 0.9, y: 0.9) : .identity
         UIView.animate(

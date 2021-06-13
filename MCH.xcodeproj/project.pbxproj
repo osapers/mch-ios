@@ -43,6 +43,10 @@
 		5C17D7DD26760E2F00775406 /* ProjectsNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C17D7DC26760E2F00775406 /* ProjectsNavigationController.swift */; };
 		5C17D7E026760E8C00775406 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C17D7DF26760E8C00775406 /* ProfileViewController.swift */; };
 		5C17D7E426760EA500775406 /* ProjectsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C17D7E326760EA500775406 /* ProjectsListViewController.swift */; };
+		5CFA09CC2676171B008F7686 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFA09CB2676171B008F7686 /* EditProfileViewController.swift */; };
+		5CFA09CF26761BE8008F7686 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFA09CE26761BE8008F7686 /* UserService.swift */; };
+		5CFA09D126761BFF008F7686 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFA09D026761BFF008F7686 /* User.swift */; };
+		5CFA09D326762941008F7686 /* TextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFA09D226762941008F7686 /* TextStyle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -83,6 +87,10 @@
 		5C17D7DC26760E2F00775406 /* ProjectsNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectsNavigationController.swift; sourceTree = "<group>"; };
 		5C17D7DF26760E8C00775406 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		5C17D7E326760EA500775406 /* ProjectsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectsListViewController.swift; sourceTree = "<group>"; };
+		5CFA09CB2676171B008F7686 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
+		5CFA09CE26761BE8008F7686 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		5CFA09D026761BFF008F7686 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		5CFA09D226762941008F7686 /* TextStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStyle.swift; sourceTree = "<group>"; };
 		686FE9E66911C84FC519945E /* Pods_MCH.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MCH.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E32671399E93708E5F35B49 /* Pods-MCH.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MCH.debug.xcconfig"; path = "Target Support Files/Pods-MCH/Pods-MCH.debug.xcconfig"; sourceTree = "<group>"; };
 		BA6C91DAB428496D96FFCD88 /* Pods-MCH.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MCH.release.xcconfig"; path = "Target Support Files/Pods-MCH/Pods-MCH.release.xcconfig"; sourceTree = "<group>"; };
@@ -181,6 +189,7 @@
 				5C00C7B22674DEBB004430E7 /* Notificaitons.swift */,
 				5C00C7C0267601B0004430E7 /* String.swift */,
 				5C00C7C2267602E2004430E7 /* RefreshControl.swift */,
+				5CFA09D226762941008F7686 /* TextStyle.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -199,6 +208,7 @@
 		5C00C78326749F46004430E7 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				5CFA09CD26761BDD008F7686 /* UserService */,
 				5C00C7B92675F470004430E7 /* EventsService */,
 				5C00C7AA2674D37F004430E7 /* AuthStorage */,
 				5C00C7A52674BA41004430E7 /* Models */,
@@ -258,6 +268,7 @@
 			children = (
 				5C00C7A62674BA49004430E7 /* EventsModels.swift */,
 				5C00C7BE2675F966004430E7 /* AuthModels.swift */,
+				5CFA09D026761BFF008F7686 /* User.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -310,6 +321,7 @@
 			isa = PBXGroup;
 			children = (
 				5C17D7DF26760E8C00775406 /* ProfileViewController.swift */,
+				5CFA09CB2676171B008F7686 /* EditProfileViewController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -320,6 +332,14 @@
 				5C17D7E326760EA500775406 /* ProjectsListViewController.swift */,
 			);
 			path = ProjectsList;
+			sourceTree = "<group>";
+		};
+		5CFA09CD26761BDD008F7686 /* UserService */ = {
+			isa = PBXGroup;
+			children = (
+				5CFA09CE26761BE8008F7686 /* UserService.swift */,
+			);
+			path = UserService;
 			sourceTree = "<group>";
 		};
 		979DFA74F33DE849BB7C1261 /* Frameworks */ = {
@@ -453,6 +473,7 @@
 				5C00C78A26749FFD004430E7 /* NetworkService.swift in Sources */,
 				5C00C78526749F9F004430E7 /* DependenciesFactory.swift in Sources */,
 				5C00C7BB2675F482004430E7 /* EventsService.swift in Sources */,
+				5CFA09CC2676171B008F7686 /* EditProfileViewController.swift in Sources */,
 				5C00C7A72674BA49004430E7 /* EventsModels.swift in Sources */,
 				5C00C7BF2675F966004430E7 /* AuthModels.swift in Sources */,
 				5C00C7B12674D793004430E7 /* AuthNavigationController.swift in Sources */,
@@ -463,6 +484,7 @@
 				5C00C77C26749AFC004430E7 /* UIColor.swift in Sources */,
 				5C00C7C3267602E2004430E7 /* RefreshControl.swift in Sources */,
 				5C00C79A2674B6B8004430E7 /* UserEventsNavigationController.swift in Sources */,
+				5CFA09CF26761BE8008F7686 /* UserService.swift in Sources */,
 				5C17D7DB26760E1600775406 /* ProfileNavigationController.swift in Sources */,
 				5C00C7C1267601B0004430E7 /* String.swift in Sources */,
 				5C00C7B32674DEBB004430E7 /* Notificaitons.swift in Sources */,
@@ -473,9 +495,11 @@
 				5C00C7B82674F034004430E7 /* Logger.swift in Sources */,
 				5C00C75F26749085004430E7 /* AppDelegate.swift in Sources */,
 				5C00C7AC2674D396004430E7 /* AuthStorage.swift in Sources */,
+				5CFA09D126761BFF008F7686 /* User.swift in Sources */,
 				5C17D7DD26760E2F00775406 /* ProjectsNavigationController.swift in Sources */,
 				5C17D7E426760EA500775406 /* ProjectsListViewController.swift in Sources */,
 				5C00C7A22674B9D6004430E7 /* EventViewController.swift in Sources */,
+				5CFA09D326762941008F7686 /* TextStyle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,7 +10,7 @@ import UIKit
 import SDWebImage
 
 extension EventViewController {
-
+    
     func setupViews() {
         view.backgroundColor = .white
         setupEventIcon()
@@ -30,7 +30,7 @@ extension EventViewController {
             action: #selector(openMap)
         )
     }
-
+    
     private func setupEventIcon() {
         view.addSubview(iconView)
         iconView.autoSetDimensions(to: CGSize(width: 48, height: 48))
@@ -40,7 +40,7 @@ extension EventViewController {
         iconView.autoPinEdge(toSuperviewMargin: .top, withInset: 16)
         iconView.sd_imageIndicator = SDWebImageActivityIndicator.gray
     }
-
+    
     private func setupEventName() {
         view.addSubview(nameLabel)
         nameLabel.numberOfLines = 1
@@ -76,7 +76,7 @@ extension EventViewController {
         dateLabel.autoPinEdge(.left, to: .left, of: view, withOffset: 16)
         dateLabel.autoPinEdge(.right, to: .right, of: view, withOffset: -16)
     }
-
+    
     private func setupEventAddress() {
         view.addSubview(addressLabel)
         addressLabel.autoPinEdge(.top, to: .bottom, of: dateLabel, withOffset: 8)
@@ -84,7 +84,7 @@ extension EventViewController {
         addressLabel.autoPinEdge(toSuperviewEdge: .left, withInset: 16)
         addressLabel.autoPinEdge(toSuperviewEdge: .right, withInset: 16, relation: .greaterThanOrEqual)
     }
-
+    
     private func setupEventEmail() {
         view.addSubview(emailLabel)
         emailLabel.autoPinEdge(.top, to: .bottom, of: addressLabel, withOffset: 8)
@@ -94,7 +94,7 @@ extension EventViewController {
         emailLabel.enabledTextCheckingTypes = NSTextCheckingAllSystemTypes
         emailLabel.delegate = self
     }
-
+    
     private func setupWebsiteLabel() {
         view.addSubview(websiteLabel)
         websiteLabel.autoPinEdge(.top, to: .bottom, of: emailLabel, withOffset: 8)
@@ -105,8 +105,8 @@ extension EventViewController {
         websiteLabel.enabledTextCheckingTypes = NSTextCheckingAllSystemTypes
         websiteLabel.delegate = self
     }
-
-
+    
+    
     private func setupParticipateButton() {
         view.addSubview(participateButton)
         participateButton.autoSetDimension(.height, toSize: 48)

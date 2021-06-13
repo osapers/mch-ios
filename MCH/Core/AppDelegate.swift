@@ -10,9 +10,9 @@ import NotificationCenter
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
     var window: UIWindow?
-
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let rootViewContoller = DependenciesFactory.shared.authStorage().isAuthorized
             ? RootTabBarController() as UIViewController
@@ -33,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.registerForRemoteNotifications()
         return true
     }
-
+    
     @objc private func handleAuthorization() {
         let center = UNUserNotificationCenter.current()
         center.requestAuthorization(options:[.badge, .alert, .sound]) { granted, error in
@@ -46,7 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = RootTabBarController()
         window?.makeKeyAndVisible()
     }
-
+    
     func application(
         _ application: UIApplication,
         didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data
@@ -57,7 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print(token)
         // отправка на сервер
     }
-
+    
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         print(
             (error as NSError).description

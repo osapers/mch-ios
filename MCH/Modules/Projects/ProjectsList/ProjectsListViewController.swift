@@ -8,12 +8,12 @@
 import UIKit
 
 class ProjectsListViewController: UIViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
     }
-
+    
     func setupViews() {
         navigationItem.title = "Проекты"
         view.backgroundColor = .white

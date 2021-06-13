@@ -10,7 +10,7 @@ import PureLayout
 import Combine
 
 final class AuthViewController: UIViewController {
-
+    
     lazy var passwordTextField = UITextField()
     lazy var loginTextField = UITextField()
     lazy var stackView = UIStackView().configureForAutoLayout()
@@ -18,7 +18,7 @@ final class AuthViewController: UIViewController {
     lazy var authStorage = dependencies.authStorage()
     lazy var networkService = dependencies.networkService()
     private var cancellableBag: [AnyCancellable] = []
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Авторизация"
@@ -32,7 +32,7 @@ final class AuthViewController: UIViewController {
         stackView.autoPinEdge(toSuperviewEdge: .left, withInset: 16)
         stackView.autoPinEdge(toSuperviewEdge: .right, withInset: 16)
         stackView.autoAlignAxis(.horizontal, toSameAxisOf: view, withOffset: -UIScreen.main.bounds.height / 5)
-
+        
         loginTextField.placeholder = "Почта"
         loginTextField.autoSetDimension(.height, toSize: 48)
         loginTextField.borderStyle = .roundedRect
@@ -40,13 +40,13 @@ final class AuthViewController: UIViewController {
         loginTextField.keyboardType = .emailAddress
         loginTextField.addTarget(self, action: #selector(loginTextFieldChanged), for: .editingChanged)
         loginTextField.autocorrectionType = .no
-
+        
         passwordTextField.autoSetDimension(.height, toSize: 48)
         passwordTextField.placeholder = "Пароль"
         passwordTextField.borderStyle = .roundedRect
         passwordTextField.addTarget(self, action: #selector(loginTextFieldChanged), for: .editingChanged)
         passwordTextField.autocorrectionType = .no
-
+        
         view.addSubview(continueButton)
         continueButton.autoPinEdge(toSuperviewEdge: .left, withInset: 16)
         continueButton.autoSetDimension(.height, toSize: 48)
@@ -60,30 +60,30 @@ final class AuthViewController: UIViewController {
         continueButton.isEnabled = false
         continueButton.addTarget(self, action: #selector(handleContinueButtonTap), for: .touchUpInside)
     }
-
+    
     @objc private func loginTextFieldChanged() {
         handleContinueButtonState()
     }
-
+    
     @objc private func passwordTextFieldChanged() {
         handleContinueButtonState()
     }
-
+    
     @objc private func handleContinueButtonTap() {
         view.endEditing(true)
         guard let login = loginTextField.text, let password = passwordTextField.text else {
             return
         }
-
+        
         let loadingView = startLoading()
-
+        
         networkService
             .auth(login: login, password: password)
             .sink { [weak self] error in
                 guard let self = self else {
                     return
                 }
-
+                
                 switch error {
                 case .failure(let error):
                     self.stopLoading(loadingView: loadingView)
@@ -95,7 +95,7 @@ final class AuthViewController: UIViewController {
                 guard let self = self else {
                     return
                 }
-
+                
                 self.stopLoading(loadingView: loadingView)
                 if response.data.isWrongPassword {
                     let alert = UIAlertController(
@@ -106,11 +106,11 @@ final class AuthViewController: UIViewController {
                     let action = UIAlertAction(title: "ОК", style: .default, handler: nil)
                     alert.addAction(action)
                     self.present(alert, animated: true, completion: nil)
-//                } else if response.data.isNotExists {
-//                    // TODO: handle new user
-//                    self.authStorage.token = response.data.token
-//                    self.authStorage.isAuthorized = true
-//                    NotificationCenter.default.post(Notification(name: .userAuthorized))
+                    //                } else if response.data.isNotExists {
+                    //                    // TODO: handle new user
+                    //                    self.authStorage.token = response.data.token
+                    //                    self.authStorage.isAuthorized = true
+                    //                    NotificationCenter.default.post(Notification(name: .userAuthorized))
                 } else {
                     self.authStorage.token = response.data.token
                     self.authStorage.isAuthorized = true
@@ -119,26 +119,9 @@ final class AuthViewController: UIViewController {
             }
             .store(in: &cancellableBag)
     }
-
+    
     private func handleContinueButtonState() {
         continueButton.isEnabled = !passwordTextField.text.isEmptyOrNil
             && loginTextField.text.isEmail
-    }
-}
-
-fileprivate extension Optional where Wrapped == String {
-
-    var isEmptyOrNil: Bool {
-        self == nil || self?.replacingOccurrences(of: " ", with: "") == ""
-    }
-
-    var isEmail: Bool {
-        guard let self = self else {
-            return false
-        }
-
-        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-        let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-        return emailPred.evaluate(with: self)
     }
 }

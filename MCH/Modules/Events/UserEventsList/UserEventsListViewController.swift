@@ -9,26 +9,26 @@ import UIKit
 import Combine
 
 class UserEventsListViewController: UIViewController {
-
+    
     enum Constants {
         static let reuseIdentifier = "EventCollectionViewCell"
         static let shimmerReuseIdentifier = "EventShimmerCollectionViewCell"
     }
-
+    
     var isLoading = true
-
+    
     lazy var collectionView = UICollectionView(
         frame: view.bounds,
         collectionViewLayout: UICollectionViewLayout.makeTableViewLayout()
     ).configureForAutoLayout()
     var zeroScreen: UIView?
     private var cancellableBag: [AnyCancellable] = []
-
+    
     lazy var eventsService = dependencies.eventsService()
     var events: [Event] {
         eventsService.events.filter { $0.isParticipating == true }
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
@@ -47,7 +47,7 @@ class UserEventsListViewController: UIViewController {
         
         collectionView.refreshControl = refreshControl
     }
-
+    
     private func loadEvents() {
         eventsService
             .obtainEvents()
@@ -67,13 +67,13 @@ class UserEventsListViewController: UIViewController {
             }
             .store(in: &cancellableBag)
     }
-
+    
     private func handleZeroScreen() {
         if !events.isEmpty {
             zeroScreen?.removeFromSuperview()
             return
         }
-
+        
         let zeroScreen = UIView().configureForAutoLayout()
         zeroScreen.backgroundColor = .white
         let noResultLabel = UILabel().configureForAutoLayout()

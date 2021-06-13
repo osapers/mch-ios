@@ -9,7 +9,7 @@ import UIKit
 import PureLayout
 
 extension EventsListViewController {
-
+    
     func setupViews() {
         view.addSubview(collectionView)
         collectionView.autoPinEdgesToSuperviewEdges()
@@ -35,15 +35,15 @@ extension EventsListViewController:
     UICollectionViewDataSource,
     UICollectionViewDelegate,
     UICollectionViewDelegateFlowLayout {
-
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         1
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         isLoading ? 10 : eventsService.events.count
     }
-
+    
     func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
@@ -52,7 +52,7 @@ extension EventsListViewController:
             withReuseIdentifier: isLoading ? Constants.shimmerReuseIdentifier : Constants.reuseIdentifier,
             for: indexPath
         )
-
+        
         (cell as? EventCollectionViewCell).map { cell in
             cell.bindModel(model: eventsService.events[indexPath.row])
             cell.didPressHandler = { [weak self] in
@@ -70,7 +70,7 @@ extension EventsListViewController:
         }
         return cell
     }
-
+    
     func collectionView(
         _ collectionView: UICollectionView,
         willDisplay cell: UICollectionViewCell,

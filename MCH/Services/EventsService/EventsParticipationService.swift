@@ -10,22 +10,22 @@ import Combine
 import Foundation
 
 final class EventsParticipationService {
-
+    
     private let networkService: NetworkService
-
+    
     private let eventParticipationSubject = PassthroughSubject<String, Never>()
-
+    
     init(networkService: NetworkService) {
         self.networkService = networkService
     }
 }
 
 extension EventsParticipationService {
-
+    
     var eventParticipationPublisher: AnyPublisher<String, Never> {
         eventParticipationSubject.eraseToAnyPublisher()
     }
-
+    
     func participateInEvent(_ event: Event) -> AnyPublisher<Void, AFError> {
         networkService
             .participateInEvent(eventID: event.id)

@@ -10,7 +10,7 @@ import PureLayout
 import UIView_Shimmer
 
 class EventShimmerCollectionViewCell: UICollectionViewCell, ShimmeringViewProtocol {
-
+    
     let containerView = UIView().configureForAutoLayout()
     let eventIcon = UIView().configureForAutoLayout()
     let eventName = UIView().configureForAutoLayout()
@@ -18,12 +18,12 @@ class EventShimmerCollectionViewCell: UICollectionViewCell, ShimmeringViewProtoc
     let eventType = UIView().configureForAutoLayout()
     let eventDate = UIView().configureForAutoLayout()
     let shadowView = UIView().configureForAutoLayout()
-
+    
     private var didPressHandler: (() -> Void)?
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-
+        
         setupContainerView()
         setupShadowView()
         setupEventIcon()
@@ -32,7 +32,7 @@ class EventShimmerCollectionViewCell: UICollectionViewCell, ShimmeringViewProtoc
         setupEventType()
         setupEventDate()
     }
-
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         clipsToBounds = false
@@ -44,12 +44,12 @@ class EventShimmerCollectionViewCell: UICollectionViewCell, ShimmeringViewProtoc
             cornerRadii: CGSize(width: 8, height: 8)
         ).cgPath
     }
-
+    
     private func setupContainerView() {
         addSubview(containerView)
         containerView.autoPinEdgesToSuperviewEdges()
     }
-
+    
     private func setupShadowView() {
         containerView.addSubview(shadowView)
         shadowView.backgroundColor = .white
@@ -69,14 +69,14 @@ class EventShimmerCollectionViewCell: UICollectionViewCell, ShimmeringViewProtoc
         shadowView.layer.masksToBounds = false
         shadowView.layer.rasterizationScale = UIScreen.main.scale
     }
-
+    
     private func setupEventIcon() {
         containerView.addSubview(eventIcon)
         eventIcon.autoSetDimensions(to: CGSize(width: 48, height: 48))
         eventIcon.autoPinEdge(toSuperviewEdge: .left, withInset: 16)
         eventIcon.autoPinEdge(toSuperviewEdge: .top, withInset: 16)
     }
-
+    
     private func setupEventName() {
         containerView.addSubview(eventName)
         eventName.autoSetDimension(.height, toSize: 24)
@@ -107,7 +107,7 @@ class EventShimmerCollectionViewCell: UICollectionViewCell, ShimmeringViewProtoc
         eventDate.autoPinEdge(toSuperviewEdge: .bottom, withInset: 8)
         eventDate.autoPinEdge(toSuperviewEdge: .left, withInset: 16)
     }
-
+    
     var shimmeringAnimatedItems: [UIView] {
         [
             eventIcon,
