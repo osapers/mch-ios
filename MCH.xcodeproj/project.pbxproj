@@ -45,6 +45,11 @@
 		5C17D7E426760EA500775406 /* ProjectsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C17D7E326760EA500775406 /* ProjectsListViewController.swift */; };
 		5C61EAFB26764FBB006EE292 /* SpecializationSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C61EAFA26764FBB006EE292 /* SpecializationSearchViewController.swift */; };
 		5C61EAFD267653FB006EE292 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C61EAFC267653FB006EE292 /* UIImage.swift */; };
+		5C61EAFF26766DE2006EE292 /* ProjectsTinderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C61EAFE26766DE2006EE292 /* ProjectsTinderViewController.swift */; };
+		5C61EB022676729C006EE292 /* ProjectCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C61EB012676729C006EE292 /* ProjectCollectionViewCell.swift */; };
+		5C61EB04267672A6006EE292 /* ProjectShimmerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C61EB03267672A6006EE292 /* ProjectShimmerCollectionViewCell.swift */; };
+		5C61EB0626767305006EE292 /* ProjectListViewController+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C61EB0526767305006EE292 /* ProjectListViewController+View.swift */; };
+		5C61EB0926767355006EE292 /* ProjectsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C61EB0826767355006EE292 /* ProjectsService.swift */; };
 		5CFA09CC2676171B008F7686 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFA09CB2676171B008F7686 /* EditProfileViewController.swift */; };
 		5CFA09CF26761BE8008F7686 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFA09CE26761BE8008F7686 /* UserService.swift */; };
 		5CFA09D126761BFF008F7686 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFA09D026761BFF008F7686 /* User.swift */; };
@@ -91,6 +96,11 @@
 		5C17D7E326760EA500775406 /* ProjectsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectsListViewController.swift; sourceTree = "<group>"; };
 		5C61EAFA26764FBB006EE292 /* SpecializationSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecializationSearchViewController.swift; sourceTree = "<group>"; };
 		5C61EAFC267653FB006EE292 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
+		5C61EAFE26766DE2006EE292 /* ProjectsTinderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectsTinderViewController.swift; sourceTree = "<group>"; };
+		5C61EB012676729C006EE292 /* ProjectCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCollectionViewCell.swift; sourceTree = "<group>"; };
+		5C61EB03267672A6006EE292 /* ProjectShimmerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectShimmerCollectionViewCell.swift; sourceTree = "<group>"; };
+		5C61EB0526767305006EE292 /* ProjectListViewController+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProjectListViewController+View.swift"; sourceTree = "<group>"; };
+		5C61EB0826767355006EE292 /* ProjectsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectsService.swift; sourceTree = "<group>"; };
 		5CFA09CB2676171B008F7686 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		5CFA09CE26761BE8008F7686 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		5CFA09D026761BFF008F7686 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -213,6 +223,7 @@
 		5C00C78326749F46004430E7 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				5C61EB072676734B006EE292 /* ProjectsService */,
 				5CFA09CD26761BDD008F7686 /* UserService */,
 				5C00C7B92675F470004430E7 /* EventsService */,
 				5C00C7AA2674D37F004430E7 /* AuthStorage */,
@@ -253,6 +264,7 @@
 		5C00C79B2674B6D0004430E7 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				5C61EB002676725B006EE292 /* ProjectCell */,
 				5C00C78F2674A0AE004430E7 /* EventCell */,
 				5C00C7A82674C908004430E7 /* SpinnerViewController.swift */,
 			);
@@ -336,8 +348,27 @@
 			isa = PBXGroup;
 			children = (
 				5C17D7E326760EA500775406 /* ProjectsListViewController.swift */,
+				5C61EAFE26766DE2006EE292 /* ProjectsTinderViewController.swift */,
+				5C61EB0526767305006EE292 /* ProjectListViewController+View.swift */,
 			);
 			path = ProjectsList;
+			sourceTree = "<group>";
+		};
+		5C61EB002676725B006EE292 /* ProjectCell */ = {
+			isa = PBXGroup;
+			children = (
+				5C61EB012676729C006EE292 /* ProjectCollectionViewCell.swift */,
+				5C61EB03267672A6006EE292 /* ProjectShimmerCollectionViewCell.swift */,
+			);
+			path = ProjectCell;
+			sourceTree = "<group>";
+		};
+		5C61EB072676734B006EE292 /* ProjectsService */ = {
+			isa = PBXGroup;
+			children = (
+				5C61EB0826767355006EE292 /* ProjectsService.swift */,
+			);
+			path = ProjectsService;
 			sourceTree = "<group>";
 		};
 		5CFA09CD26761BDD008F7686 /* UserService */ = {
@@ -473,6 +504,7 @@
 				5C00C78726749FCB004430E7 /* UIViewController.swift in Sources */,
 				5C00C778267494B4004430E7 /* EventsListViewController.swift in Sources */,
 				5C00C79F2674B6EF004430E7 /* UserEventsListViewController+View.swift in Sources */,
+				5C61EAFF26766DE2006EE292 /* ProjectsTinderViewController.swift in Sources */,
 				5C00C78E2674A052004430E7 /* EventsListViewController+View.swift in Sources */,
 				5C61EAFB26764FBB006EE292 /* SpecializationSearchViewController.swift in Sources */,
 				5C00C7A92674C908004430E7 /* SpinnerViewController.swift in Sources */,
@@ -483,7 +515,9 @@
 				5C00C7BB2675F482004430E7 /* EventsService.swift in Sources */,
 				5CFA09CC2676171B008F7686 /* EditProfileViewController.swift in Sources */,
 				5C00C7A72674BA49004430E7 /* EventsModels.swift in Sources */,
+				5C61EB0926767355006EE292 /* ProjectsService.swift in Sources */,
 				5C00C7BF2675F966004430E7 /* AuthModels.swift in Sources */,
+				5C61EB0626767305006EE292 /* ProjectListViewController+View.swift in Sources */,
 				5C00C7B12674D793004430E7 /* AuthNavigationController.swift in Sources */,
 				5C00C7912674A0C9004430E7 /* EventCollectionViewCell.swift in Sources */,
 				5C00C7A42674B9EA004430E7 /* EventViewController+View.swift in Sources */,
@@ -498,6 +532,7 @@
 				5C00C7B32674DEBB004430E7 /* Notificaitons.swift in Sources */,
 				5C00C77526749312004430E7 /* RootTabBarController.swift in Sources */,
 				5C00C79D2674B6E3004430E7 /* UserEventsListViewController.swift in Sources */,
+				5C61EB04267672A6006EE292 /* ProjectShimmerCollectionViewCell.swift in Sources */,
 				5C00C7BD2675F721004430E7 /* EventsParticipationService.swift in Sources */,
 				5C00C78226749E05004430E7 /* EventsNavigationController.swift in Sources */,
 				5C00C7B82674F034004430E7 /* Logger.swift in Sources */,
@@ -508,6 +543,7 @@
 				5C17D7E426760EA500775406 /* ProjectsListViewController.swift in Sources */,
 				5C00C7A22674B9D6004430E7 /* EventViewController.swift in Sources */,
 				5CFA09D326762941008F7686 /* TextStyle.swift in Sources */,
+				5C61EB022676729C006EE292 /* ProjectCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

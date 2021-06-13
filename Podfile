@@ -8,4 +8,5 @@ target 'MCH' do
   pod 'UIView-Shimmer'
   pod 'SDWebImage', '~> 5.0'
   pod 'TTTAttributedLabel'
+  pod 'Shuffle-iOS'
 end

@@ -11,6 +11,7 @@ final class DependenciesFactory {
     
     static let shared = DependenciesFactory()
     lazy var eventsParticipationService = EventsParticipationService(networkService: networkService())
+    lazy var projectsService = ProjectsService(networkService: networkService())
     
     private init() { }
     
