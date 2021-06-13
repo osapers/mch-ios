@@ -54,17 +54,6 @@ class ProjectsTinderViewController: UIViewController {
                 self.stopLoading(loadingView: loadingView)
             }
             .store(in: &cancellableBag)
-    
-        // id
-        // тэги ()
-        // отрасль industy
-        // название name
-        // имейдж image
-        // автор owner
-        // члены member
-        // описание description
-        // readiness_stage -
-        // дата запсука launch_date
     }
 
     override func viewDidLayoutSubviews() {
@@ -109,7 +98,8 @@ class ProjectsTinderViewController: UIViewController {
         zeroScreen.backgroundColor = .white
         let noResultLabel = UILabel().configureForAutoLayout()
         zeroScreen.addSubview(noResultLabel)
-        noResultLabel.text = "На данный момент нет подходящих проектов"
+        noResultLabel.attributedText = "На данный момент\nнет подходящих проектов".styled(.label)
+        noResultLabel.textAlignment = .center
         noResultLabel.numberOfLines = 0
         noResultLabel.autoCenterInSuperview()
         view.addSubview(zeroScreen)
@@ -120,15 +110,14 @@ class ProjectsTinderViewController: UIViewController {
 
     @objc private func makeCard(for index: Int) -> SwipeCard {
         let project = dataSource[index]
+        let view = ProjectTinderView().configureForAutoLayout()
         let card = SwipeCard()
-        card.clipsToBounds = false
         card.swipeDirections = [.left, .right]
+        card.addSubview(view)
+        view.autoPinEdgesToSuperviewEdges()
+        view.bindModel(model: project)
         let content = UIView()
         content.backgroundColor = .white
-        let label = UILabel().configureForAutoLayout()
-        label.text = "hello world"
-        content.addSubview(label)
-        label.autoCenterInSuperview()
         
         card.content = content
 
@@ -156,14 +145,25 @@ extension ProjectsTinderViewController: SwipeCardStackDataSource, SwipeCardStack
         dataSource.count
     }
 
+    func cardStack(_ cardStack: SwipeCardStack, didSelectCardAt index: Int) {
+        let alert = UIAlertController(title: "Демо режим просмотра проекта", message: "Здесь должна открываться полная информация о проекте", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "ОК", style: .default, handler: nil)
+        alert.addAction(okAction)
+        self.present(alert, animated: true, completion: nil)
+    }
+
     func cardStack(_ cardStack: SwipeCardStack, didSwipeCardAt index: Int, with direction: SwipeDirection) {
         projectsService
-            .markProjectAsViewed(projecID: dataSource[index].id)
+            .markProjectAsViewed(projectID: dataSource[index].id)
             .sink { _ in }
             .store(in: &cancellableBag)
         switch direction {
         case .right:
-            participateSubject.send(())
+            projectsService
+                .applyToProject(projectID: dataSource[index].id)
+                .sink { [weak self] _ in
+                    self?.participateSubject.send(())
+                }.store(in: &cancellableBag)
         default:
             break
         }

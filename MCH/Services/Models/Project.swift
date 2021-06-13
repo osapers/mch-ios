@@ -10,31 +10,33 @@ import UIKit
 
 struct Project: Decodable {
     
+    // тэги ()
+    // отрасль industy
+    // автор owner
+    // члены member
+    // дата запсука launch_date
+    
     enum CodingKeys: String, CodingKey {
         case imageURL = "image"
         case name
-        case shortDescription = "short_description"
-        case longDescription = "description"
-        case type = "category"
-        case date
-        case email
-        case website
-        case address
+        case description = "description"
         case id
-        case isParticipating = "is_participant"
+        case readinessStage = "readiness_stage"
+        case launchDate = "launch_date"
+        case industry
+        case tagsIntersection = "tags_intersection"
     }
     
     let imageURL: URL
     let name: String
-    let shortDescription: String
-    let longDescription: String
-    let type: ReadinessStage
-    let date: Date
-    let email: String
-    let website: String
-    let address: EventAddress
+    let description: String
     let id: String
-    var isParticipating: Bool = false
+    let readinessStage: ReadinessStage
+    let launchDate: Date
+    let industry: String
+    let tagsIntersection: [String]?
+
+    let owner = Owner(image: nil, firstName: "Александр", lastName: "Ходько")
     
     enum ReadinessStage: String, Decodable {
         case idea
@@ -68,16 +70,11 @@ struct Project: Decodable {
             }
         }
     }
-    
-    struct EventAddress: Decodable {
-        enum CodingKeys: String, CodingKey {
-            case longitude = "lon"
-            case latitude = "lat"
-            case description = "raw"
-        }
-        let longitude: Double
-        let latitude: Double
-        let description: String
+
+    struct Owner {
+        let image: String?
+        let firstName: String
+        let lastName: String
     }
 }
 

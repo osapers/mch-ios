@@ -78,7 +78,7 @@ class UserEventsListViewController: UIViewController {
         zeroScreen.backgroundColor = .white
         let noResultLabel = UILabel().configureForAutoLayout()
         zeroScreen.addSubview(noResultLabel)
-        noResultLabel.text = "У Вас нет активных мероприятий"
+        noResultLabel.attributedText = "У Вас нет активных мероприятий".styled(.label)
         noResultLabel.autoCenterInSuperview()
         view.addSubview(zeroScreen)
         zeroScreen.autoPinEdgesToSuperviewMargins()

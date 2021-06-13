@@ -19,7 +19,6 @@ final class ProjectsService {
         
     init(networkService: NetworkService) {
         self.networkService = networkService
-
     }
 }
 
@@ -37,8 +36,12 @@ extension ProjectsService {
         networkService.createProject()
     }
 
-    func markProjectAsViewed(projecID: String) -> AnyPublisher<Void, Never> {
-        networkService.markProjectAsViewed(projecID: projecID)
+    func markProjectAsViewed(projectID: String) -> AnyPublisher<Void, Never> {
+        networkService.markProjectAsViewed(projectID: projectID)
+    }
+
+    func applyToProject(projectID: String) -> AnyPublisher<Void, Never> {
+        networkService.applyToProject(projectID: projectID)
     }
 }
 

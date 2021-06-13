@@ -46,7 +46,7 @@
 		5C61EAFB26764FBB006EE292 /* SpecializationSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C61EAFA26764FBB006EE292 /* SpecializationSearchViewController.swift */; };
 		5C61EAFD267653FB006EE292 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C61EAFC267653FB006EE292 /* UIImage.swift */; };
 		5C61EAFF26766DE2006EE292 /* ProjectsTinderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C61EAFE26766DE2006EE292 /* ProjectsTinderViewController.swift */; };
-		5C61EB022676729C006EE292 /* ProjectCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C61EB012676729C006EE292 /* ProjectCollectionViewCell.swift */; };
+		5C61EB022676729C006EE292 /* ProjectTinderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C61EB012676729C006EE292 /* ProjectTinderView.swift */; };
 		5C61EB04267672A6006EE292 /* ProjectShimmerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C61EB03267672A6006EE292 /* ProjectShimmerCollectionViewCell.swift */; };
 		5C61EB0626767305006EE292 /* ProjectListViewController+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C61EB0526767305006EE292 /* ProjectListViewController+View.swift */; };
 		5C61EB0926767355006EE292 /* ProjectsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C61EB0826767355006EE292 /* ProjectsService.swift */; };
@@ -98,7 +98,7 @@
 		5C61EAFA26764FBB006EE292 /* SpecializationSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecializationSearchViewController.swift; sourceTree = "<group>"; };
 		5C61EAFC267653FB006EE292 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		5C61EAFE26766DE2006EE292 /* ProjectsTinderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectsTinderViewController.swift; sourceTree = "<group>"; };
-		5C61EB012676729C006EE292 /* ProjectCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCollectionViewCell.swift; sourceTree = "<group>"; };
+		5C61EB012676729C006EE292 /* ProjectTinderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectTinderView.swift; sourceTree = "<group>"; };
 		5C61EB03267672A6006EE292 /* ProjectShimmerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectShimmerCollectionViewCell.swift; sourceTree = "<group>"; };
 		5C61EB0526767305006EE292 /* ProjectListViewController+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProjectListViewController+View.swift"; sourceTree = "<group>"; };
 		5C61EB0826767355006EE292 /* ProjectsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectsService.swift; sourceTree = "<group>"; };
@@ -360,7 +360,7 @@
 		5C61EB002676725B006EE292 /* ProjectCell */ = {
 			isa = PBXGroup;
 			children = (
-				5C61EB012676729C006EE292 /* ProjectCollectionViewCell.swift */,
+				5C61EB0C267687C7006EE292 /* ProjectTinderView */,
 				5C61EB03267672A6006EE292 /* ProjectShimmerCollectionViewCell.swift */,
 			);
 			path = ProjectCell;
@@ -372,6 +372,14 @@
 				5C61EB0826767355006EE292 /* ProjectsService.swift */,
 			);
 			path = ProjectsService;
+			sourceTree = "<group>";
+		};
+		5C61EB0C267687C7006EE292 /* ProjectTinderView */ = {
+			isa = PBXGroup;
+			children = (
+				5C61EB012676729C006EE292 /* ProjectTinderView.swift */,
+			);
+			path = ProjectTinderView;
 			sourceTree = "<group>";
 		};
 		5CFA09CD26761BDD008F7686 /* UserService */ = {
@@ -547,7 +555,7 @@
 				5C17D7E426760EA500775406 /* ProjectsListViewController.swift in Sources */,
 				5C00C7A22674B9D6004430E7 /* EventViewController.swift in Sources */,
 				5CFA09D326762941008F7686 /* TextStyle.swift in Sources */,
-				5C61EB022676729C006EE292 /* ProjectCollectionViewCell.swift in Sources */,
+				5C61EB022676729C006EE292 /* ProjectTinderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

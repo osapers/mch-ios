@@ -160,8 +160,26 @@ final class NetworkService {
         .eraseToAnyPublisher()
     }
 
-    func markProjectAsViewed(projecID: String) -> AnyPublisher<Void, Never> {
-        let endpoint = baseURL.appending("api/v1/users/projects/generate")
+    func markProjectAsViewed(projectID: String) -> AnyPublisher<Void, Never> {
+        let endpoint = baseURL.appending("api/v1/users/projects/\(projectID)/view")
+        let headers = self.headers
+        
+        return Future<EmptyResponse, AFError> { [weak self] promise in
+            self?.session.request(
+                endpoint,
+                method: .post,
+                headers: headers
+            ).responseDecodable(of: EmptyResponse.self) { response in
+                promise(response.result)
+            }
+        }
+        .map { _ in () }
+        .replaceError(with: ())
+        .eraseToAnyPublisher()
+    }
+
+    func applyToProject(projectID: String) -> AnyPublisher<Void, Never> {
+        let endpoint = baseURL.appending("api/v1/users/projects/\(projectID)/apply")
         let headers = self.headers
         
         return Future<EmptyResponse, AFError> { [weak self] promise in
