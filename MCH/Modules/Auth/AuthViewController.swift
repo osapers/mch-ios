@@ -46,6 +46,7 @@ final class AuthViewController: UIViewController {
         passwordTextField.borderStyle = .roundedRect
         passwordTextField.addTarget(self, action: #selector(loginTextFieldChanged), for: .editingChanged)
         passwordTextField.autocorrectionType = .no
+        passwordTextField.isSecureTextEntry = true
         
         view.addSubview(continueButton)
         continueButton.autoPinEdge(toSuperviewEdge: .left, withInset: 16)

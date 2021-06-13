@@ -7,6 +7,7 @@
 
 import UIKit
 import Combine
+import PureLayout
 
 class ProjectsListViewController: UIViewController {
     
@@ -16,6 +17,7 @@ class ProjectsListViewController: UIViewController {
     }
 
     var isLoading = true
+    var zeroScreen: UIView?
     
     lazy var collectionView = UICollectionView(
         frame: view.bounds,
@@ -54,6 +56,7 @@ class ProjectsListViewController: UIViewController {
                 self.createButton.isHidden = false
                 self.collectionView.isUserInteractionEnabled = true
                 self.collectionView.reloadWithAnimation()
+                self.handleZeroScreen()
                 self.collectionView.refreshControl?.endRefreshing()
             }
             .store(in: &cancellableBag)
@@ -83,6 +86,7 @@ class ProjectsListViewController: UIViewController {
                         self.isLoading = false
                         self.createButton.isHidden = false
                         self.collectionView.isUserInteractionEnabled = true
+                        self.handleZeroScreen()
                         self.collectionView.reloadData()
                     }
                     .store(in: &self.cancellableBag)
@@ -125,6 +129,27 @@ class ProjectsListViewController: UIViewController {
         alert.addAction(createAction)
         alert.addAction(cancelAction)
         self.present(alert, animated: true, completion: nil)
+    }
+
+    private func handleZeroScreen() {
+        if !projects.isEmpty {
+            zeroScreen?.removeFromSuperview()
+            return
+        }
+        
+        let zeroScreen = UIView().configureForAutoLayout()
+        zeroScreen.backgroundColor = .white
+        let noResultLabel = UILabel().configureForAutoLayout()
+        zeroScreen.addSubview(noResultLabel)
+        noResultLabel.numberOfLines = 2
+        noResultLabel.attributedText = "Вы пока не участвуете\nни в одном проекте".styled(.label)
+        noResultLabel.textAlignment = .center
+        noResultLabel.autoCenterInSuperview()
+        view.addSubview(zeroScreen)
+        zeroScreen.autoPinEdges(toSuperviewMarginsExcludingEdge: .bottom)
+        zeroScreen.autoPinEdge(.bottom, to: .top, of: createButton)
+        view.bringSubviewToFront(zeroScreen)
+        self.zeroScreen = zeroScreen
     }
 }
 
