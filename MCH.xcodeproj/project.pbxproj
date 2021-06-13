@@ -37,6 +37,8 @@
 		5C00C7BB2675F482004430E7 /* EventsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C00C7BA2675F482004430E7 /* EventsService.swift */; };
 		5C00C7BD2675F721004430E7 /* EventsParticipationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C00C7BC2675F721004430E7 /* EventsParticipationService.swift */; };
 		5C00C7BF2675F966004430E7 /* AuthModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C00C7BE2675F966004430E7 /* AuthModels.swift */; };
+		5C00C7C1267601B0004430E7 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C00C7C0267601B0004430E7 /* String.swift */; };
+		5C00C7C3267602E2004430E7 /* RefreshControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C00C7C2267602E2004430E7 /* RefreshControl.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -71,6 +73,8 @@
 		5C00C7BA2675F482004430E7 /* EventsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsService.swift; sourceTree = "<group>"; };
 		5C00C7BC2675F721004430E7 /* EventsParticipationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsParticipationService.swift; sourceTree = "<group>"; };
 		5C00C7BE2675F966004430E7 /* AuthModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthModels.swift; sourceTree = "<group>"; };
+		5C00C7C0267601B0004430E7 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		5C00C7C2267602E2004430E7 /* RefreshControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshControl.swift; sourceTree = "<group>"; };
 		686FE9E66911C84FC519945E /* Pods_MCH.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MCH.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E32671399E93708E5F35B49 /* Pods-MCH.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MCH.debug.xcconfig"; path = "Target Support Files/Pods-MCH/Pods-MCH.debug.xcconfig"; sourceTree = "<group>"; };
 		BA6C91DAB428496D96FFCD88 /* Pods-MCH.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MCH.release.xcconfig"; path = "Target Support Files/Pods-MCH/Pods-MCH.release.xcconfig"; sourceTree = "<group>"; };
@@ -165,6 +169,8 @@
 				5C00C78626749FCB004430E7 /* UIViewController.swift */,
 				5C00C7922674A2AB004430E7 /* UICollectionView.swift */,
 				5C00C7B22674DEBB004430E7 /* Notificaitons.swift */,
+				5C00C7C0267601B0004430E7 /* String.swift */,
+				5C00C7C2267602E2004430E7 /* RefreshControl.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -410,7 +416,9 @@
 				5C00C7952674A40A004430E7 /* EventsShimmerCollectionViewCell.swift in Sources */,
 				5C00C7932674A2AB004430E7 /* UICollectionView.swift in Sources */,
 				5C00C77C26749AFC004430E7 /* UIColor.swift in Sources */,
+				5C00C7C3267602E2004430E7 /* RefreshControl.swift in Sources */,
 				5C00C79A2674B6B8004430E7 /* UserEventsNavigationController.swift in Sources */,
+				5C00C7C1267601B0004430E7 /* String.swift in Sources */,
 				5C00C7B32674DEBB004430E7 /* Notificaitons.swift in Sources */,
 				5C00C77526749312004430E7 /* RootTabBarController.swift in Sources */,
 				5C00C79D2674B6E3004430E7 /* UserEventsListViewController.swift in Sources */,

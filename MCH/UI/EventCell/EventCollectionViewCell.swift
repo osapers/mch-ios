@@ -19,6 +19,7 @@ class EventCollectionViewCell: UICollectionViewCell {
     let eventTypeView = UIView().configureForAutoLayout()
     let eventDate = UILabel().configureForAutoLayout()
     let shadowView = UIView().configureForAutoLayout()
+    let paritcipationLabel = UILabel().configureForAutoLayout()
 
     var didPressHandler: (() -> Void)?
 
@@ -32,6 +33,7 @@ class EventCollectionViewCell: UICollectionViewCell {
         setupEventDescription()
         setupEventType()
         setupEventDate()
+        setupParitcipationLabel()
     }
 
     override func layoutSubviews() {
@@ -78,6 +80,7 @@ class EventCollectionViewCell: UICollectionViewCell {
         containerView.addSubview(eventIcon)
         eventIcon.autoSetDimensions(to: CGSize(width: 48, height: 48))
         eventIcon.layer.cornerRadius = 24
+        eventIcon.clipsToBounds = true
         eventIcon.contentMode = .scaleAspectFit
         eventIcon.autoPinEdge(toSuperviewEdge: .left, withInset: 16)
         eventIcon.autoPinEdge(toSuperviewEdge: .top, withInset: 8)
@@ -105,7 +108,7 @@ class EventCollectionViewCell: UICollectionViewCell {
         eventType.numberOfLines = 1
         eventTypeView.layer.cornerRadius = 8
         eventTypeView.addSubview(eventType)
-        eventType.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 2, left: 4, bottom: 2, right: 4))
+        eventType.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 2, left: 6, bottom: 2, right: 6))
         eventTypeView.autoPinEdge(.top, to: .bottom, of: eventDescription, withOffset: 8)
         eventTypeView.autoPinEdge(toSuperviewEdge: .left, withInset: 16)
         eventTypeView.autoPinEdge(toSuperviewEdge: .right, withInset: 16, relation: .greaterThanOrEqual)
@@ -113,10 +116,18 @@ class EventCollectionViewCell: UICollectionViewCell {
     
     private func setupEventDate() {
         containerView.addSubview(eventDate)
-        eventDate.autoPinEdge(.top, to: .bottom, of: eventType, withOffset: 8)
+        eventDate.autoPinEdge(.top, to: .bottom, of: eventType, withOffset: 12)
         eventDate.autoPinEdge(toSuperviewEdge: .right, withInset: 16)
         eventDate.autoPinEdge(toSuperviewEdge: .left, withInset: 16)
-        eventDate.autoPinEdge(toSuperviewEdge: .bottom, withInset: 8)
+        eventDate.autoPinEdge(toSuperviewEdge: .bottom, withInset: 12)
+    }
+
+    private func setupParitcipationLabel() {
+        containerView.addSubview(paritcipationLabel)
+        paritcipationLabel.autoAlignAxis(.horizontal, toSameAxisOf: eventDate)
+        paritcipationLabel.autoPinEdge(toSuperviewEdge: .right, withInset: 16)
+        paritcipationLabel.text = "Вы участвуете"
+        paritcipationLabel.textColor = UIColor.Brand.green
     }
     
     required init?(coder: NSCoder) {
@@ -127,11 +138,13 @@ class EventCollectionViewCell: UICollectionViewCell {
         eventName.text = model.name
         eventDescription.text = model.shortDescription
         let formatter = DateFormatter()
-        formatter.dateFormat = "EEEE, MMM d"
-        eventDate.text = formatter.string(from: model.date)
+        formatter.locale = Locale(identifier: "ru_RU")
+        formatter.dateFormat = "EEEE, d MMM"
+        eventDate.text = formatter.string(from: model.date).capitalizingFirstLetter()
         eventIcon.sd_setImage(with: model.imageURL)
         eventType.text = model.type.description
         eventTypeView.backgroundColor = model.type.color
+        paritcipationLabel.isHidden = !model.isParticipating
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {

@@ -46,7 +46,15 @@ extension EventsService {
         eventsChangeSubject.eraseToAnyPublisher()
     }
 
-    func obtainEvents() -> AnyPublisher<[Event], Never> {
-        networkService.obtainEvents()
+    func obtainEvents() -> AnyPublisher<Void, Never> {
+        networkService
+            .obtainEvents()
+            .handleEvents(
+                receiveOutput: { [weak self] events in
+                    self?.events = events
+                }
+            )
+            .map { _ in () }
+            .eraseToAnyPublisher()
     }
 }

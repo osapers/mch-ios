@@ -106,11 +106,11 @@ final class AuthViewController: UIViewController {
                     let action = UIAlertAction(title: "ОК", style: .default, handler: nil)
                     alert.addAction(action)
                     self.present(alert, animated: true, completion: nil)
-                } else if response.data.isNotExists {
-                    // TODO: handle new user
-                    self.authStorage.token = response.data.token
-                    self.authStorage.isAuthorized = true
-                    NotificationCenter.default.post(Notification(name: .userAuthorized))
+//                } else if response.data.isNotExists {
+//                    // TODO: handle new user
+//                    self.authStorage.token = response.data.token
+//                    self.authStorage.isAuthorized = true
+//                    NotificationCenter.default.post(Notification(name: .userAuthorized))
                 } else {
                     self.authStorage.token = response.data.token
                     self.authStorage.isAuthorized = true

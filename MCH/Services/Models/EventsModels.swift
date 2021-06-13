@@ -38,11 +38,35 @@ struct Event: Decodable {
 
     enum EventType: String, Decodable {
         case webinar = "webinar"
+        case forum = "forum"
+        case session = "session"
+        case exhibition = "exhibition"
+        case lecture = "lecture"
+        case onlineLecture = "online_lecture"
+        case demoDay = "demo_day"
+        case roundTable = "round_table"
+        case strategicSession = "strategic_session"
 
         var color: UIColor {
             switch self {
             case .webinar:
-                return .red
+                return UIColor.Brand.backgroundRed
+            case .forum:
+                return UIColor.Brand.backgroundBlue
+            case .session:
+                return UIColor.Brand.backgroundGreen
+            case .exhibition:
+                return UIColor.Brand.backgroundViolet
+            case .lecture:
+                return UIColor.Brand.backgroundOrange
+            case .onlineLecture:
+                return UIColor.Brand.backgroundYellow
+            case .demoDay:
+                return UIColor.Brand.backgroundRed
+            case .roundTable:
+                return UIColor.Brand.backgroundGreen
+            case .strategicSession:
+                return UIColor.Brand.backgroundBlue
             }
         }
 
@@ -50,6 +74,22 @@ struct Event: Decodable {
             switch self {
             case .webinar:
                 return "Вебинар"
+            case .forum:
+                return "Форум"
+            case .session:
+                return "Сессия"
+            case .exhibition:
+                return "Выставка"
+            case .lecture:
+                return "Лекция"
+            case .onlineLecture:
+                return "On-line лекция"
+            case .demoDay:
+                return "Демо-день"
+            case .roundTable:
+                return "Круглый стол"
+            case .strategicSession:
+                return "Стратегическая сессия"
             }
         }
     }

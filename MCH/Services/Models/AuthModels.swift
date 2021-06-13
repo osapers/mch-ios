@@ -20,10 +20,10 @@ struct AuthResponse: Decodable {
         enum CodingKeys: String, CodingKey {
             case token
             case isWrongPassword = "is_wrong_password"
-            case isNotExists = "is_not_exists"
+//            case isNotExists = "is_not_exists"
         }
         let token: String
         let isWrongPassword: Bool
-        let isNotExists: Bool
+//        let isNotExists: Bool
     }
 }

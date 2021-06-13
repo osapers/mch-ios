@@ -36,12 +36,15 @@ class EventsListViewController: UIViewController {
             }
             .store(in: &cancellableBag)
         loadEvents()
-        let refreshControl = UIRefreshControl()
+        let refreshControl = RefreshControl()
+        refreshControl.onValueChange { [weak self] _ in
+            self?.loadEvents()
+        }
+        
         collectionView.refreshControl = refreshControl
-        refreshControl.addTarget(self, action: #selector(loadEvents), for: .valueChanged)
     }
 
-    @objc private func loadEvents() {
+    private func loadEvents() {
         eventsService
             .obtainEvents()
             .sink { [weak self] events in
@@ -50,9 +53,11 @@ class EventsListViewController: UIViewController {
                 }
                 
                 self.isLoading = false
-                self.collectionView.refreshControl?.endRefreshing()
                 self.collectionView.reloadWithAnimation()
                 self.collectionView.isUserInteractionEnabled = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    self.collectionView.refreshControl?.endRefreshing()
+                }
             }
             .store(in: &cancellableBag)
     }

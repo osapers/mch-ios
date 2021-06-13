@@ -10,6 +10,7 @@ import Combine
 import SDWebImage
 import EventKit
 import TTTAttributedLabel
+import MapKit
 
 class EventViewController: UIViewController {
 
@@ -37,6 +38,19 @@ class EventViewController: UIViewController {
         participateButton.addTarget(self, action: #selector(handlePatricipateButtonTap), for: .touchUpInside)
     }
 
+    @objc func openMap() {
+        let place = MKMapItem(
+            placemark: MKPlacemark(
+                coordinate: CLLocationCoordinate2D(
+                    latitude: event.address.latitude,
+                    longitude: event.address.longitude
+                )
+            )
+        )
+                
+        MKMapItem.openMaps(with: [place], launchOptions: nil)
+    }
+
     @objc private func handlePatricipateButtonTap() {
         let loadingView = startLoading()
 
@@ -61,7 +75,7 @@ class EventViewController: UIViewController {
                 }
                 alert.addAction(addToCalendarAction)
                 let cancelAction = UIAlertAction(title: "Нет", style: .destructive) { _ in
-                    self.removeParticipateButton()
+                    self.updateParticipateButton()
                 }
                 alert.addAction(cancelAction)
                 return self.present(alert, animated: true, completion: nil)
@@ -70,7 +84,7 @@ class EventViewController: UIViewController {
     }
 
     private func handleAddToCalendar() {
-        removeParticipateButton()
+        updateParticipateButton()
         eventStore.requestAccess(to: .event) { (granted, error) in
             DispatchQueue.main.async {
                 guard granted, error == nil else {
@@ -104,20 +118,27 @@ class EventViewController: UIViewController {
         }
     }
 
-    private func removeParticipateButton() {
+    private func updateParticipateButton() {
         UIView.animate(withDuration: 0.5) {
-            self.participateButton.alpha = 0
-        } completion: { _ in
-            self.participateButton.removeFromSuperview()
-        }
+            self.setIsPariticipating()
+        } completion: { _ in }
+    }
+
+    private func setIsPariticipating() {
+        participateButton.setTitle("Вы участвуете", for: .normal)
+        participateButton.tintColor = UIColor.Brand.green
+        participateButton.setTitleColor(UIColor.Brand.green, for: .normal)
+        participateButton.backgroundColor = .white
+        participateButton.isUserInteractionEnabled = false
     }
 
     private func bindModel(model: Event) {
         nameLabel.text = model.name
         descriptionLabel.text = model.longDescription
         let formatter = DateFormatter()
-        formatter.dateFormat = "EEEE, MMM d"
-        dateLabel.text = formatter.string(from: model.date)
+        formatter.locale = Locale(identifier: "ru_RU")
+        formatter.dateFormat = "EEEE, d MMM"
+        dateLabel.text = formatter.string(from: model.date).capitalizingFirstLetter()
         iconView.sd_setImage(with: model.imageURL)
         eventTypeLabel.text = model.type.description
         eventTypeView.backgroundColor = model.type.color
@@ -125,7 +146,7 @@ class EventViewController: UIViewController {
         emailLabel.text = "Электронная почта: \(model.email)"
         websiteLabel.text = "Сайт: \(model.website)"
         if model.isParticipating {
-            participateButton.removeFromSuperview()
+            setIsPariticipating()
         }
     }
 }

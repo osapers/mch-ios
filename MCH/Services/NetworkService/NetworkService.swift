@@ -65,7 +65,7 @@ final class NetworkService {
     }
 
     func participateInEvent(eventID: String) -> AnyPublisher<Void, AFError> {
-        let endpoint = baseURL.appending("api/v1/\(eventID)/participate")
+        let endpoint = baseURL.appending("api/v1/events/\(eventID)/participate")
         let headers = self.headers
 
         return Future<Void, AFError> { [weak self] promise in

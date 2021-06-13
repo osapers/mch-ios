@@ -23,11 +23,19 @@ extension EventViewController {
         setupParticipateButton()
         setupWebsiteLabel()
         navigationItem.title = "Мероприятие"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: "На карте",
+            style: .plain,
+            target: self,
+            action: #selector(openMap)
+        )
     }
 
     private func setupEventIcon() {
         view.addSubview(iconView)
         iconView.autoSetDimensions(to: CGSize(width: 48, height: 48))
+        iconView.layer.cornerRadius = 24
+        iconView.clipsToBounds = true
         iconView.autoPinEdge(toSuperviewEdge: .left, withInset: 16)
         iconView.autoPinEdge(toSuperviewMargin: .top, withInset: 16)
         iconView.sd_imageIndicator = SDWebImageActivityIndicator.gray
@@ -56,7 +64,7 @@ extension EventViewController {
         eventTypeLabel.numberOfLines = 1
         eventTypeView.layer.cornerRadius = 8
         eventTypeView.addSubview(eventTypeLabel)
-        eventTypeLabel.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 2, left: 4, bottom: 2, right: 4))
+        eventTypeLabel.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 2, left: 6, bottom: 2, right: 6))
         eventTypeView.autoPinEdge(.top, to: .bottom, of: descriptionLabel, withOffset: 8)
         eventTypeView.autoPinEdge(toSuperviewEdge: .left, withInset: 16)
         eventTypeView.autoPinEdge(toSuperviewEdge: .right, withInset: 16, relation: .greaterThanOrEqual)
