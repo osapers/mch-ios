@@ -26,12 +26,23 @@ final class UserService {
         name: String,
         surname: String,
         image: UIImage?,
-        email: String
+        email: String,
+        specialization: [String]
     ) -> AnyPublisher<User, AFError> {
         let resizedImage = image?.resized(toWidth: 300)
         let base64Image = resizedImage?.convertToBase64()
-        let user = User(name: name, surname: surname, avatar: base64Image, email: email)
+        let user = User(
+            name: name,
+            surname: surname,
+            avatar: base64Image,
+            email: email,
+            specializations: specialization
+        )
         return networkService.updateUser(user)
+    }
+
+    func getSpecializations(query: String) -> AnyPublisher<[String], AFError> {
+        networkService.getSpecializations(query: query)
     }
 }
 

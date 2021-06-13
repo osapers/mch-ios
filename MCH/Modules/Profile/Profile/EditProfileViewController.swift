@@ -40,6 +40,8 @@ class EditProfileViewController: UIViewController, UINavigationControllerDelegat
         avatarButton.clipsToBounds = true
         avatarButton.layer.cornerRadius = 32
         avatarButton.autoPinEdge(toSuperviewMargin: .top, withInset: 16)
+        avatarButton.setImage(user.avatar.map { UIImage(base64String: $0) ?? UIImage(named: "Profile")! }, for: .normal)
+        avatarButton.imageView?.contentMode = .scaleAspectFill
         avatarButton.autoPinEdge(toSuperviewEdge: .left, withInset: 16)
         avatarButton.addTarget(self, action: #selector(handleAvatarTap), for: .touchUpInside)
         
@@ -54,6 +56,7 @@ class EditProfileViewController: UIViewController, UINavigationControllerDelegat
         stackView.autoAlignAxis(.horizontal, toSameAxisOf: view, withOffset: -UIScreen.main.bounds.height / 7)
         
         nameTextField.placeholder = "Имя"
+        nameTextField.text = user.name
         nameTextField.autoSetDimension(.height, toSize: 48)
         nameTextField.borderStyle = .roundedRect
         nameTextField.textContentType = .name
@@ -62,6 +65,7 @@ class EditProfileViewController: UIViewController, UINavigationControllerDelegat
         
         surnameTextField.autoSetDimension(.height, toSize: 48)
         surnameTextField.placeholder = "Фамилия"
+        surnameTextField.text = user.surname
         surnameTextField.borderStyle = .roundedRect
         surnameTextField.addTarget(self, action: #selector(surnameTextFieldChanged), for: .editingChanged)
         surnameTextField.autocorrectionType = .no
@@ -78,6 +82,8 @@ class EditProfileViewController: UIViewController, UINavigationControllerDelegat
         saveButton.backgroundColor = UIColor.Brand.green
         saveButton.isEnabled = false
         saveButton.addTarget(self, action: #selector(handleSaveButtonTap), for: .touchUpInside)
+
+        handleSaveButtonState()
     }
     
     @objc private func nameTextFieldChanged() {
@@ -100,7 +106,13 @@ class EditProfileViewController: UIViewController, UINavigationControllerDelegat
         view.endEditing(true)
         let loadingView = startLoading()
         userService
-            .updateUser(name: name, surname: surname, image: avatarButton.imageView?.image, email: user.email)
+            .updateUser(
+                name: name,
+                surname: surname,
+                image: avatarButton.imageView?.image,
+                email: user.email,
+                specialization: user.specializations
+            )
             .sink { [weak self] result in
                 switch result {
                 case .failure(let error):
@@ -141,7 +153,6 @@ class EditProfileViewController: UIViewController, UINavigationControllerDelegat
         didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]
     ) {
         if let pickedImage = info[.originalImage] as? UIImage {
-            avatarButton.imageView?.contentMode = .scaleAspectFill
             avatarButton.setImage(pickedImage, for: .normal)
         }
         dismiss(animated: true, completion: nil)

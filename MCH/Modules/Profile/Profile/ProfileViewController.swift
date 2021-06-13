@@ -24,6 +24,7 @@ class ProfileViewController: UIViewController {
     private var cancellableBag: [AnyCancellable] = []
     private lazy var userService = dependencies.userService()
     private var user: User?
+    private var specializations: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,7 +50,7 @@ class ProfileViewController: UIViewController {
         avatarImage.autoSetDimensions(to: CGSize(width: 64, height: 64))
         avatarImage.image = UIImage(named: "Profile")
         avatarImage.layer.borderWidth = 1
-        avatarImage.contentMode = .center
+        avatarImage.contentMode = .scaleAspectFill
         avatarImage.layer.borderColor = UIColor.Brand.black.withAlphaComponent(0.5).cgColor
         avatarImage.clipsToBounds = true
         avatarImage.layer.cornerRadius = 32
@@ -68,7 +69,8 @@ class ProfileViewController: UIViewController {
         stackView.autoPinEdge(toSuperviewEdge: .top, withInset: 16)
 
         scrollView.addSubview(tagsTitle)
-        tagsTitle.autoPinEdge(.top, to: .bottom, of: stackView, withOffset: 24)
+        tagsTitle.autoPinEdge(.top, to: .bottom, of: stackView, withOffset: 24, relation: .greaterThanOrEqual)
+        tagsTitle.autoPinEdge(.top, to: .bottom, of: avatarImage, withOffset: 24, relation: .greaterThanOrEqual)
         tagsTitle.autoPinEdge(toSuperviewEdge: .left, withInset: 0)
         tagsTitle.attributedText = "Специализации".styled(.title1)
 
@@ -77,6 +79,7 @@ class ProfileViewController: UIViewController {
         addTagsButton.setTitleColor(UIColor.Brand.green, for: .normal)
         addTagsButton.autoPinEdge(toSuperviewEdge: .right, withInset: 0)
         addTagsButton.autoAlignAxis(.horizontal, toSameAxisOf: tagsTitle)
+        addTagsButton.addTarget(self, action: #selector(appendSpecializatons), for: .touchUpInside)
 
         specializationsStack.alignment = .leading
         specializationsStack.axis = .vertical
@@ -124,33 +127,14 @@ class ProfileViewController: UIViewController {
     
     private func bindUser(_ user: User) {
         self.user = user
+        specializations = user.specializations
         emailLabel.attributedText = user.email.styled(.label)
-        nameLabel.attributedText = "Александр".styled(.title1)
-        surnameLabel.attributedText = "Ходько".styled(.title1)
-        let spe = ["iOS", "Android", "Дизайн"]
-        let colors = [UIColor.Brand.backgroundBlue, UIColor.Brand.backgroundRed, UIColor.Brand.backgroundGreen]
-        (0...6).forEach { _ in
-            spe.forEach { spe in
-                let view = UIView()
-                let label = UILabel().configureForAutoLayout()
-                view.addSubview(label)
-                label.autoPinEdgesToSuperviewEdges(
-                    with: UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 0),
-                    excludingEdge: .right
-                )
-                let deleteButton = UIButton().configureForAutoLayout()
-                view.addSubview(deleteButton)
-                deleteButton.autoMatch(.height, to: .width, of: deleteButton)
-                deleteButton.autoPinEdgesToSuperviewEdges(
-                    with: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 6),
-                    excludingEdge: .left
-                )
-                deleteButton.autoPinEdge(.left, to: .right, of: label, withOffset: 8)
-                deleteButton.setImage(UIImage(named: "Dismiss"), for: .normal)
-                label.attributedText = spe.styled(.label)
-                view.backgroundColor = colors.randomElement()
-                view.layer.cornerRadius = 8
-                specializationsStack.addArrangedSubview(view)
+        nameLabel.attributedText = user.name.styled(.title1)
+        surnameLabel.attributedText = user.surname.styled(.title1)
+
+        if specializationsStack.arrangedSubviews.isEmpty {
+            specializations.enumerated().forEach { index, specialization in
+                specializationsStack.addArrangedSubview(makeViewForSpecializaton(specialization, index: index + 1))
             }
         }
         view.layoutIfNeeded()
@@ -158,12 +142,105 @@ class ProfileViewController: UIViewController {
         
         avatarImage.image = user.avatar.map { UIImage(base64String: $0) ?? UIImage(named: "Profile")! }
     }
-}
 
-fileprivate extension UIImage {
-    convenience init?(base64String: String) {
-        guard !base64String.isEmpty else { return nil }
-        guard let data = Data(base64Encoded: base64String) else { return nil }
-        self.init(data: data)
+    @objc private func appendSpecializatons() {
+        let specializationSearchViewController = SpecializationSearchViewController()
+        specializationSearchViewController.currentSpecializations = user?.specializations ?? []
+        specializationSearchViewController.specializationPublisher.sink { [weak self] specialization in
+            guard let self = self else {
+                return
+            }
+
+            self.user?.specializations.append(specialization)
+            self.user.map {
+                self.userService.updateUser(
+                    name: $0.name,
+                    surname: $0.surname,
+                    image: self.avatarImage.image,
+                    email: $0.email,
+                    specialization: $0.specializations
+                )
+                .sink(receiveCompletion: { _ in }, receiveValue: { _ in })
+                .store(in: &self.cancellableBag)
+            }
+            self.specializationsStack.arrangedSubviews.forEach {
+                self.specializationsStack.removeArrangedSubview($0)
+                $0.removeFromSuperview()
+            }
+            self.user.map {
+                self.bindUser($0)
+            }
+        }.store(in: &cancellableBag)
+
+        navigationController?.pushViewController(specializationSearchViewController, animated: true)
+    }
+
+    private func makeViewForSpecializaton(_ specialization: String, index: Int) -> UIView {
+        let colors = [
+            UIColor.Brand.backgroundBlue,
+            UIColor.Brand.backgroundRed,
+            UIColor.Brand.backgroundGreen,
+            UIColor.Brand.backgroundOrange,
+            UIColor.Brand.backgroundViolet,
+            UIColor.Brand.backgroundYellow
+        ]
+
+        let specializationView = UIView()
+        specializationView.tag = index
+        let specializationLabel = UILabel().configureForAutoLayout()
+        specializationLabel.tag = index
+        specializationView.addSubview(specializationLabel)
+        specializationLabel.autoPinEdgesToSuperviewEdges(
+            with: UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 0),
+            excludingEdge: .right
+        )
+        let deleteSpecializationButton = UIButton().configureForAutoLayout()
+        specializationView.addSubview(deleteSpecializationButton)
+        deleteSpecializationButton.autoMatch(.height, to: .width, of: deleteSpecializationButton)
+        deleteSpecializationButton.autoPinEdgesToSuperviewEdges(
+            with: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 6),
+            excludingEdge: .left
+        )
+        deleteSpecializationButton.autoPinEdge(.left, to: .right, of: specializationLabel, withOffset: 8)
+        deleteSpecializationButton.setImage(UIImage(named: "Dismiss"), for: .normal)
+        deleteSpecializationButton.tag = index
+        deleteSpecializationButton.addTarget(self, action: #selector(removeSpecialization(_:)), for: .touchUpInside)
+        specializationLabel.attributedText = specialization.styled(.label)
+        specializationView.backgroundColor = colors.randomElement()
+        specializationView.layer.cornerRadius = 8
+        return specializationView
+    }
+
+    @objc private func removeSpecialization(_ sender: UIButton) {
+        let tag = sender.tag
+        let index = tag - 1
+        let specialization = specializations[index]
+        user?.specializations.removeAll(where: { $0 == specialization })
+        user.map {
+            userService.updateUser(
+                name: $0.name,
+                surname: $0.surname,
+                image: avatarImage.image,
+                email: $0.email,
+                specialization: $0.specializations
+            )
+            .sink(receiveCompletion: { _ in }, receiveValue: { _ in })
+            .store(in: &cancellableBag)
+        }
+        UIView.animate(
+            withDuration: 0.2,
+            delay: 0.0,
+            usingSpringWithDamping: 0.9,
+            initialSpringVelocity: 1,
+            options: [],
+            animations: {
+                self.specializationsStack.arrangedSubviews.first(where: { $0.tag == tag }).map {
+                    $0.isHidden = true
+                    $0.alpha = 0
+                    self.specializationsStack.layoutIfNeeded()
+                }
+            },
+            completion: { _ in }
+        )
     }
 }

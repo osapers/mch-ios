@@ -106,7 +106,7 @@ final class NetworkService {
         let endpoint = baseURL.appending("api/v1/users/me")
         let headers = self.headers
         
-        return Future<User, AFError> { [weak self] promise in
+        return Future<UserResponse, AFError> { [weak self] promise in
             self?.session.request(
                 endpoint,
                 method: .put,
@@ -114,9 +114,31 @@ final class NetworkService {
                 encoder: JSONParameterEncoder.default,
                 headers: headers
             )
-            .responseDecodable(of: User.self) { response in
+            .responseDecodable(of: UserResponse.self) { response in
                 promise(response.result)
             }
-        }.eraseToAnyPublisher()
+        }
+        .map { $0.data }
+        .eraseToAnyPublisher()
+    }
+
+    func getSpecializations(query: String) -> AnyPublisher<[String], AFError> {
+        let endpoint = baseURL.appending("api/v1/tags/search")
+        let headers = self.headers
+        
+        return Future<SpecializationsResponse, AFError> { [weak self] promise in
+            self?.session.request(
+                endpoint,
+                method: .post,
+                parameters: SpecializationsRequest(query: query),
+                encoder: JSONParameterEncoder.default,
+                headers: headers
+            )
+            .responseDecodable(of: SpecializationsResponse.self) { response in
+                promise(response.result)
+            }
+        }
+        .map { $0.data }
+        .eraseToAnyPublisher()
     }
 }
