@@ -127,6 +127,7 @@ final class NetworkService {
                 endpoint,
                 method: .put,
                 parameters: user,
+                encoder: JSONParameterEncoder.default,
                 headers: headers
             )
             .responseDecodable(of: UserResponse.self, decoder: self.decoder) { response in
@@ -149,6 +150,7 @@ final class NetworkService {
                 endpoint,
                 method: .post,
                 parameters: SpecializationsRequest(query: query),
+                encoder: JSONParameterEncoder.default,
                 headers: headers
             )
             .responseDecodable(of: SpecializationsResponse.self, decoder: self.decoder) { response in

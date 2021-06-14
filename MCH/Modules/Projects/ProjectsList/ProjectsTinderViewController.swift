@@ -158,17 +158,20 @@ extension ProjectsTinderViewController: SwipeCardStackDataSource, SwipeCardStack
     }
 
     func cardStack(_ cardStack: SwipeCardStack, didSwipeCardAt index: Int, with direction: SwipeDirection) {
+        let id = dataSource[index].id
         projectsService
-            .markProjectAsViewed(projectID: dataSource[index].id)
+            .markProjectAsViewed(projectID: id)
             .sink { _ in }
             .store(in: &cancellableBag)
         switch direction {
         case .right:
-            projectsService
-                .applyToProject(projectID: dataSource[index].id)
-                .sink { [weak self] _ in
-                    self?.participateSubject.send(())
-                }.store(in: &cancellableBag)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.projectsService
+                    .applyToProject(projectID: id)
+                    .sink { [weak self] _ in
+                        self?.participateSubject.send(())
+                    }.store(in: &self.cancellableBag)
+            }
         default:
             break
         }

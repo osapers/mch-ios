@@ -35,14 +35,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     @objc private func handleAuthorization() {
-        let center = UNUserNotificationCenter.current()
-        center.requestAuthorization(options:[.badge, .alert, .sound]) { granted, error in
-            if granted  {
-                DispatchQueue.main.async {
-                    UIApplication.shared.registerForRemoteNotifications()
-                }
-            }
-        }
         window?.rootViewController = RootTabBarController()
         window?.makeKeyAndVisible()
     }

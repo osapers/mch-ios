@@ -140,6 +140,7 @@ class EditProfileViewController: UIViewController, UINavigationControllerDelegat
     }
     
     @objc private func handleAvatarTap() {
+        view.endEditing(true)
         avatarImagePicker.delegate = self
         avatarImagePicker.sourceType = .savedPhotosAlbum
         avatarImagePicker.allowsEditing = true
